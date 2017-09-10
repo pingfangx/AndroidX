@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.pingfangx.translator.base.BaseViewHolder.OnItemClickListener
+import com.pingfangx.translator.base.IntentUtils
 import com.pingfangx.translator.databinding.ActivityMainBinding
 import com.pingfangx.translator.project.ProjectAdapter
 import com.pingfangx.translator.project.ProjectBean
@@ -49,10 +50,14 @@ class MainActivity : AppCompatActivity() {
         val adpter = ProjectAdapter(this, list)
         adpter.mOnItemClickListener = object : OnItemClickListener {
             override fun onItemClick(position: Int) {
-                toast("点击了" + adpter.mData[position].path.get())
+                open(adpter.mData[position].path.get())
             }
         }
         recyclerView.adapter = adpter
+    }
+
+    fun open(path: String) {
+        IntentUtils.startActivity(this, TranslatorActivity::class.java, path)
     }
 
     fun onClickBtnAdd(@Suppress("UNUSED_PARAMETER") view: View) {

@@ -1,15 +1,20 @@
 package com.pingfangx.translator
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.EditorInfo
 import android.widget.RadioButton
+import com.pingfangx.translator.base.BaseActivity
+import com.pingfangx.translator.base.IntentUtils
 import kotlinx.android.synthetic.main.activity_translator.*
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.FileReader
 import java.io.FileWriter
 
-class TranslatorActivity : AppCompatActivity() {
+class TranslatorActivity : BaseActivity() {
+    val REQUEST_PERMISSION = 1
     val mTranslation: Array<String> by lazy {
         getTranslation()
     }
@@ -21,10 +26,26 @@ class TranslatorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_translator)
+        val perms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        } else {
+            arrayOf<String>(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            initViews()
+        } else {
+            EasyPermissions.requestPermissions(this, "请允许读取文件权限", REQUEST_PERMISSION, *perms)
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>?) {
+        super.onPermissionsGranted(requestCode, perms)
         initViews()
     }
 
     fun initViews() {
+        val path = IntentUtils.getExtra(intent)
+        path?.log()
         var index = 0
         for (i in 0 until mTranslation.size) {
             index = i
