@@ -3,33 +3,53 @@ package com.pingfangx.translator
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.view.inputmethod.EditorInfo
 import android.widget.RadioButton
 import com.pingfangx.translator.base.BaseActivity
 import com.pingfangx.translator.base.IntentUtils
 import kotlinx.android.synthetic.main.activity_translator.*
 import pub.devrel.easypermissions.EasyPermissions
+import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 
 class TranslatorActivity : BaseActivity() {
-    val REQUEST_PERMISSION = 1
-    val mTranslation: Array<String> by lazy {
-        getTranslation()
-    }
-    var mIndex: Int = 0
+    private val REQUEST_PERMISSION = 1
 
-    var mCurrentKey: String = ""
-    var mCurrentValueArray: List<String> = ArrayList<String>()
+    private val mProjectPath: String by lazy {
+        IntentUtils.getExtra(intent) as String
+    }
+    private val mTranslationFile: String by lazy {
+        File(mProjectPath + "/source").list()[0]
+    }
+    private val mSource: MutableList<String> by lazy {
+        val firstFile = "$mProjectPath/source/$mTranslationFile"
+        getTranslation(firstFile)
+    }
+    private val mTarget: MutableList<String> by lazy {
+        val firstFile = "$mProjectPath/target/$mTranslationFile"
+        getTranslation(firstFile)
+    }
+    private val mDictionary: MutableList<String> by lazy {
+        val folder = File(mProjectPath + "/tm")
+        val firstFile = folder.path + "/" + folder.list()[0]
+        getTranslation(firstFile)
+    }
+    private val mTargetFile: String by lazy {
+        "$mProjectPath/target/$mTranslationFile"
+    }
+
+    private var mIndex: Int = 0
+
+    private var mCurrentKey: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_translator)
         val perms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         } else {
-            arrayOf<String>(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         if (EasyPermissions.hasPermissions(this, *perms)) {
             initViews()
@@ -43,18 +63,16 @@ class TranslatorActivity : BaseActivity() {
         initViews()
     }
 
-    fun initViews() {
-        val path = IntentUtils.getExtra(intent)
-        path?.log()
+    private fun initViews() {
         var index = 0
-        for (i in 0 until mTranslation.size) {
-            index = i
-            val line: String = mTranslation[i]
-            val keyAndValue = line.split("=")
-            val value: String = keyAndValue[1]
-            val valueArray: List<String> = value.split('|')
-            if (valueArray.size > 1) {
-                break
+        if (mTarget.isEmpty().not()) {
+            for (i in 0 until mTarget.size) {
+                if (mSource[i] == mTarget[i]) {
+                    if (mSource[i].split('=').size > 1) {
+                        index = i
+                        break
+                    }
+                }
             }
         }
         showTranslation(index)
@@ -72,55 +90,108 @@ class TranslatorActivity : BaseActivity() {
                 false
             }
         })
+        radio_group.setOnCheckedChangeListener { _, i -> saveTranslation((radio_group.findViewById(i) as RadioButton).text.toString()) }
     }
 
-    fun showTranslation(index: Int) {
-        if (index < 0 || index > mTranslation.size) {
+    private fun showTranslation(index: Int) {
+        if (index < 0 || index >= mSource.size) {
             return
         }
-        mIndex = index
-        tv_index.setText("${mIndex + 1}/${mTranslation.size}")
-        val line: String = mTranslation[mIndex]
-        val keyAndValue = line.split("=")
-        if (keyAndValue.size < 2) {
-            toast("line at $mIndex wrong")
-        }
-        mCurrentKey = keyAndValue[0]
-        tv_english.setText(mCurrentKey)
-        val value: String = keyAndValue[1]
-        mCurrentValueArray = value.split('|')
-        et_translation.setText(mCurrentValueArray[0])
-        radio_group.removeAllViews()
 
+        //找到有效的一行
+        mIndex = index
+        while (mIndex >= 0 && mIndex < mSource.size) {
+            val line: String = mSource[mIndex]
+            val keyAndValue = line.split("=")
+            if (keyAndValue.size < 2) {
+                "line at $mIndex wrong".log()
+                mIndex += 1
+                continue
+            }
+            break
+        }
+
+        val line: String = mSource[mIndex]
+        val keyAndValue = line.split("=")
+        //设置行号
+        tv_index.text = "${mIndex + 1}/${mSource.size}"
+        val sourceKey: String = keyAndValue[0]
+        val sourceValue: String = keyAndValue[1]
+
+        mCurrentKey = sourceKey
+        tv_english.text = sourceValue
+
+        val mCurrentValueArray: MutableList<String> = mutableListOf()
+
+        //添加词典
+        for (iLine: String in mDictionary) {
+            //用startsWith减少判断次数，=容易满足
+            if (iLine.startsWith(sourceValue)) {
+                val splitResult = iLine.split("=")
+                if (splitResult.size > 1) {
+                    if (splitResult[0] == sourceValue) {
+                        //找到
+                        mCurrentValueArray += splitResult[1].split('|')
+                        break
+                    }
+                }
+            }
+        }
+        //添加已翻译的
+        for (iLine: String in mTarget) {
+            val splitResult = iLine.split("=")
+            if (splitResult.size > 1) {
+                if (splitResult[0] == sourceKey) {
+                    if (splitResult[1] != sourceValue) {
+                        mCurrentValueArray.add(0, splitResult[1])
+                        break
+                    }
+                }
+            }
+        }
+
+        if (mCurrentValueArray.isEmpty().not()) {
+            et_translation.setText(mCurrentValueArray[0])
+        } else {
+            et_translation.setText("")
+        }
+        radio_group.removeAllViews()
         for (i in 0 until mCurrentValueArray.size) {
             val radioButton = RadioButton(this)
             radioButton.id = i
             radioButton.text = mCurrentValueArray[i]
-            radioButton.height = 200
+            radioButton.height = 100
             radio_group.addView(radioButton)
         }
-        radio_group.setOnCheckedChangeListener { _, i -> saveTranslation(mCurrentValueArray[i]) }
     }
 
-    fun getTranslation(): Array<String> {
-        val fileName = Environment.getExternalStorageDirectory().path + "/xx/dict_diff.txt"
-        val fileReader = FileReader(fileName)
+    private fun getTranslation(filePath: String): MutableList<String> {
+        if (File(filePath).exists().not()) {
+            return mutableListOf()
+        }
+        val fileReader = FileReader(filePath)
         val lindes = fileReader.readLines()
         fileReader.close()
-        return lindes.toTypedArray()
+        return lindes.toMutableList()
     }
 
-    fun saveTranslation(translation: String) {
-        mTranslation[mIndex] = mCurrentKey + "=" + translation
-        saveTranslationToFile()
+    private fun saveTranslation(translation: String) {
+        if (mTarget.isEmpty()) {
+            mTarget.addAll(mSource)
+        }
+        mTarget[mIndex] = mCurrentKey + "=" + translation
+        saveTranslationToFile(mTargetFile, mTarget)
         showTranslation(mIndex + 1)
     }
 
-    fun saveTranslationToFile() {
-        val fileName = Environment.getExternalStorageDirectory().path + "/xx/dict_diff.txt"
-        val fileWriter = FileWriter(fileName)
-        fileWriter.write(mTranslation.joinToString("\n"))
+    private fun saveTranslationToFile(filePath: String, list: List<String>) {
+        val parentFile = File(filePath).parentFile
+        if (parentFile.exists().not()) {
+            parentFile.mkdirs()
+        }
+        val fileWriter = FileWriter(mTargetFile)
+        fileWriter.write(list.joinToString("\n"))
         fileWriter.close()
-        "write success".log()
+        "write success $filePath".log()
     }
 }
