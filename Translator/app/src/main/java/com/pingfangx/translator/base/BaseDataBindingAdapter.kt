@@ -14,11 +14,16 @@ import com.pingfangx.translator.R
  * @date 2017/9/10
  */
 abstract class BaseDataBindingAdapter<Bean, VH : BaseDataBindingViewHolder<Bean>>(context: Context, data: List<Bean>) : BaseAdapter<Bean, VH>(context, data) {
+    var mOnItemClickListener: BaseViewHolder.OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VH {
         val inflator: LayoutInflater = LayoutInflater.from(mContext)
         val binding: ViewDataBinding = DataBindingUtil.inflate(inflator, R.layout.item_project, parent, false)
-        return onCreateViewHolder(binding)
+        val holder = onCreateViewHolder(binding)
+        mOnItemClickListener?.let {
+            holder.mOnItemClickListener = mOnItemClickListener
+        }
+        return holder
     }
 
     abstract fun onCreateViewHolder(binding: ViewDataBinding): VH

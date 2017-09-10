@@ -2,7 +2,7 @@ package com.pingfangx.translator.base
 
 import android.content.Context
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 /**
  * 通过gson解析
@@ -11,14 +11,11 @@ import com.google.gson.reflect.TypeToken
  * @date 2017/9/10
  */
 abstract class GsonDbHelper<Bean>(context: Context) : SpDbHelper<Bean>(context) {
-
+    abstract val mType: Type
     private val mGson: Gson = Gson()
     override fun listFormString(string: String): List<Bean> {
-        val type = object : TypeToken<List<Bean>>() {
-
-        }.type
         try {
-            mList = mGson.fromJson(string, type)
+            mList = mGson.fromJson(string, mType)
         } catch (e: Exception) {
             e.printStackTrace()
         }

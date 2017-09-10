@@ -13,19 +13,19 @@ class TranslatorActivity : AppCompatActivity() {
     val mTranslation: Array<String> by lazy {
         getTranslation()
     }
-    var mIndex: Int = 0;
+    var mIndex: Int = 0
 
     var mCurrentKey: String = ""
-    var mCurrentValueArray: List<String> = ArrayList<String>();
+    var mCurrentValueArray: List<String> = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_translator)
-        initViews();
+        initViews()
     }
 
     fun initViews() {
-        var index: Int = 0
+        var index = 0
         for (i in 0 until mTranslation.size) {
             index = i
             val line: String = mTranslation[i]
@@ -43,7 +43,7 @@ class TranslatorActivity : AppCompatActivity() {
         btn_save_empty.setOnClickListener { saveTranslation("") }
         et_translation.setSingleLine(true)
         et_translation.inputType = EditorInfo.TYPE_CLASS_TEXT
-        et_translation.setOnEditorActionListener({ textView, i, keyEvent ->
+        et_translation.setOnEditorActionListener({ _, i, _ ->
             if (i == EditorInfo.IME_ACTION_GO) {
                 saveTranslation(et_translation.text.toString())
                 true
@@ -72,22 +72,21 @@ class TranslatorActivity : AppCompatActivity() {
         radio_group.removeAllViews()
 
         for (i in 0 until mCurrentValueArray.size) {
-            val radioButton: RadioButton = RadioButton(this)
+            val radioButton = RadioButton(this)
             radioButton.id = i
             radioButton.text = mCurrentValueArray[i]
             radioButton.height = 200
             radio_group.addView(radioButton)
         }
-        radio_group.setOnCheckedChangeListener { radioGroup, i -> saveTranslation(mCurrentValueArray[i]) }
+        radio_group.setOnCheckedChangeListener { _, i -> saveTranslation(mCurrentValueArray[i]) }
     }
-
 
     fun getTranslation(): Array<String> {
         val fileName = Environment.getExternalStorageDirectory().path + "/xx/dict_diff.txt"
         val fileReader = FileReader(fileName)
         val lindes = fileReader.readLines()
         fileReader.close()
-        return lindes.toTypedArray();
+        return lindes.toTypedArray()
     }
 
     fun saveTranslation(translation: String) {

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.pingfangx.translator.base.BaseViewHolder.OnItemClickListener
 import com.pingfangx.translator.databinding.ActivityMainBinding
 import com.pingfangx.translator.project.ProjectAdapter
 import com.pingfangx.translator.project.ProjectBean
@@ -45,7 +46,13 @@ class MainActivity : AppCompatActivity() {
         mHasProject.set(list.isEmpty().not())
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ProjectAdapter(this, list)
+        val adpter = ProjectAdapter(this, list)
+        adpter.mOnItemClickListener = object : OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                toast("点击了" + adpter.mData[position].path.get())
+            }
+        }
+        recyclerView.adapter = adpter
     }
 
     fun onClickBtnAdd(@Suppress("UNUSED_PARAMETER") view: View) {

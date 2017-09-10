@@ -10,5 +10,17 @@ import android.view.View
  * @date 2017/9/10
  */
 abstract class BaseViewHolder<in Bean>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    var mOnItemClickListener: OnItemClickListener? = null
+
+    init {
+        itemView.setOnClickListener { mOnItemClickListener?.onItemClick(adapterPosition) }
+    }
+
     abstract fun bindTo(bean: Bean)
+    interface OnItemClickListener {
+        /**
+         * 点击item
+         */
+        fun onItemClick(position: Int)
+    }
 }
