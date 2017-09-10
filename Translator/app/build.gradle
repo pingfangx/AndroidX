@@ -8,6 +8,7 @@ android {
     defaultConfig {
         applicationId "com.pingfangx.translator"
         minSdkVersion 14
+        //noinspection OldTargetApi
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -37,6 +38,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:design:$support_version"
+    compile 'com.google.code.gson:gson:2.7'
 }
 repositories {
     mavenCentral()

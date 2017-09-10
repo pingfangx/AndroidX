@@ -22,10 +22,11 @@
             android:id="@+id/tv_choose_project"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="请选择一个项目"
+            android:text="@string/main_choose_project"
             android:visibility="@{vm.mHasProject?View.VISIBLE:View.GONE}" />
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_choose_project"
@@ -35,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="请添加项目"
+            android:text="@string/please_add_project"
             android:visibility="@{vm.mHasProject?View.GONE:View.VISIBLE}" />
 
         <android.support.design.widget.FloatingActionButton

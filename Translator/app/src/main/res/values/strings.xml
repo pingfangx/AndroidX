@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">翻译X</string>
+    <string name="main_choose_project">请选择一个项目</string>
+    <string name="please_add_project">请添加项目</string>
 </resources>
