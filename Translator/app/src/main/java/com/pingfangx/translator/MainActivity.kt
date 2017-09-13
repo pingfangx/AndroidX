@@ -76,8 +76,13 @@ class MainActivity : AppCompatActivity() {
                     val uri: Uri = data.data
                     val path: String = uri.path
                     //因为选择的是文件，获取目录
-                    val parentFile: File = File(path).parentFile
-                    val name = parentFile.name
+                    var parentFile: File = File(path).parentFile
+                    var name = parentFile.name
+                    if (name == "source" || name == "target") {
+                        //选择了源目录，添加父目录
+                        parentFile = parentFile.parentFile
+                        name = parentFile.name
+                    }
                     mProjectManager.add(ProjectBean(name, parentFile.path))
                     initProjectList()
                 }

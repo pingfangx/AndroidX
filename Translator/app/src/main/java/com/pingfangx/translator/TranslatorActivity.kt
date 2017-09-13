@@ -14,6 +14,10 @@ import java.io.FileReader
 import java.io.FileWriter
 
 class TranslatorActivity : BaseActivity() {
+    /**
+     * 分隔符
+     */
+    private val SEPARATOR = "[xx|]"
     private val REQUEST_PERMISSION = 1
 
     private val mProjectPath: String by lazy {
@@ -131,7 +135,7 @@ class TranslatorActivity : BaseActivity() {
                 if (splitResult.size > 1) {
                     if (splitResult[0] == sourceValue) {
                         //找到
-                        mCurrentValueArray += splitResult[1].split('|')
+                        mCurrentValueArray += splitResult[1].split(SEPARATOR)
                         break
                     }
                 }
