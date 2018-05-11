@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".shader.ShaderActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickBtnTileMode"
+            android:text="TileMode"
+            android:textAllCaps="false" />
+
+        <com.pingfangx.bitmapdemo.shader.BitmapShaderView
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.pingfangx.bitmapdemo.shader.LinearGradient1View
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <com.pingfangx.bitmapdemo.shader.LinearGradient2View
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.pingfangx.bitmapdemo.shader.RadialGradient1View
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <com.pingfangx.bitmapdemo.shader.RadialGradient2View
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.pingfangx.bitmapdemo.shader.SweepGradient1View
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <com.pingfangx.bitmapdemo.shader.SweepGradient2View
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+
+        <com.pingfangx.bitmapdemo.shader.ComposeShaderView
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </LinearLayout>
+</ScrollView>
