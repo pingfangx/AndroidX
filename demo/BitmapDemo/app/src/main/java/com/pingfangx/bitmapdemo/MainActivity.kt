@@ -25,4 +25,8 @@ class MainActivity : AppCompatActivity() {
     fun onClickBtnXfermode(view: View) {
         startActivity(Intent(this, XfermodeActivity::class.java))
     }
+
+    fun onClickBtnRotateBitmap(view: View) {
+        startActivity(Intent(this, RotateBitmapActivity::class.java))
+    }
 }

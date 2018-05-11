@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".xfermode.XfermodeActivity">
         </activity>
+        <activity android:name=".RotateBitmapActivity">
+        </activity>
     </application>
 
 </manifest>

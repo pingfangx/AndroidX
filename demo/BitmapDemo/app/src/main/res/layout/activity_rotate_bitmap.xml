@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RotateBitmapActivity">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClickIvRotate"
+        android:src="@drawable/ic_arrow_down" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClickIvRotate2"
+        android:src="@drawable/ic_arrow_down" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClickIvRotate3"
+        android:src="@drawable/ic_arrow_down" />
+
+    <com.pingfangx.bitmapdemo.RotatableImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClickRotatableImageView"
+        android:src="@drawable/ic_arrow_down" />
+
+</LinearLayout>

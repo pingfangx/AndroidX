@@ -35,9 +35,15 @@
             android:text="ShaderDemo" />
 
         <Button
-            android:onClick="onClickBtnXfermode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onClickBtnXfermode"
             android:text="Xfermode" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickBtnRotateBitmap"
+            android:text="旋转图片" />
     </LinearLayout>
 </ScrollView>
