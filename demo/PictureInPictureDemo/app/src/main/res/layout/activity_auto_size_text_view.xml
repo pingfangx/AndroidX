@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".autosize.AutoSizeTextViewActivity">
+
+    <TextView
+        android:id="@+id/tv"
+        style="@style/tv_auto_size" />
+
+    <TextView
+        style="@style/tv_auto_size"
+        android:autoSizeTextType="none" />
+
+    <!--用 uniform-->
+    <TextView
+        style="@style/tv_auto_size"
+        android:autoSizeTextType="uniform" />
+
+    <!--可以使用支持库-->
+    <TextView
+        style="@style/tv_auto_size"
+        app:autoSizeTextType="uniform" />
+
+    <!--granularity-->
+    <TextView
+        style="@style/tv_auto_size"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform" />
+
+    <!--preset sizes-->
+    <TextView
+        style="@style/tv_auto_size"
+        android:autoSizePresetSizes="@array/auto_size_text_sizes"
+        android:autoSizeTextType="uniform" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickBtnAdd"
+            android:text="加" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickBtnSub"
+            android:text="减" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickBtnSetProgrammatically"
+            android:text="用代码设置" />
+    </LinearLayout>
+
+</LinearLayout>
