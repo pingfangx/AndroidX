@@ -1,1 +1,1 @@
-include ':app', ':getdeviceiddemo'
+include ':app', ':getdeviceiddemo', ':douyindemo'
