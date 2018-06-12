@@ -26,6 +26,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickBtnInitUser"
+        android:text="initUser" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:onClick="onClickBtnGetUserInfo"
         android:text="Get" />
 

@@ -3,7 +3,6 @@
     package="com.pingfangx.demo.douyindemo">
 
     <application
-        android:name="com.ss.android.ugc.aweme.app.AwemeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
