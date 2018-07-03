@@ -9,4 +9,14 @@
 最后都会使用字体，判断字体如果没有加粗，再设置 Paint#setFakeBoldText
     </string>
     <string name="text_view_bold_use_tag"><b>中文 test 使用 b 标签,同上</b></string>
+
+    <string name="title_text_view_skew">自定义斜体</string>
+    <string name="tips_text_view_skew">
+与粗体一样，style，标签，span，都作用于字体\n
+字体是可以正常斜体的\n
+\n
+直接设置 paint 则会造成右边被裁切\n
+要想取消裁切，可以在右侧添加一个不可见字符，或是改为作用于字体的方法。
+    </string>
+    <string name="tips_map_navigation">基本都是使用 uri 启动 Activity\n各地图有不同的 uri 规则</string>
 </resources>

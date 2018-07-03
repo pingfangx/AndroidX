@@ -5,11 +5,10 @@ import android.content.Intent
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.TextView
 import com.pingfangx.demo.androidx.R
 import com.pingfangx.demo.androidx.base.widget.recycler.BaseRecyclerViewAdapter
-import com.pingfangx.demo.androidx.base.widget.recycler.BaseRecyclerViewHolder
-import kotlinx.android.synthetic.main.activity_base_activity_list.*
+import com.pingfangx.demo.androidx.base.widget.recycler.BaseTextAdapter
+import kotlinx.android.synthetic.main.activity_base_list.*
 
 /**
  * Activity 列表
@@ -19,14 +18,24 @@ import kotlinx.android.synthetic.main.activity_base_activity_list.*
  */
 abstract class BaseActivityListActivity : BaseActivity() {
     override fun getLayoutResId(): Int {
-        return R.layout.activity_base_activity_list
+        return R.layout.activity_base_list
     }
 
     override fun initViews() {
         super.initViews()
         recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val activityList = generateActivityList()
-        recycler_view.adapter = ActivityAdapter(this, activityList)
+        val textAdapter = object : BaseTextAdapter<ActivityBean>(this, activityList) {
+            override fun getItemText(t: ActivityBean): String {
+                return t.name
+            }
+        }.setOnItemClickListener(object : BaseRecyclerViewAdapter.OnItemClickListener<ActivityBean> {
+            override fun onItemClick(view: View, position: Int, t: ActivityBean) {
+                val intent = Intent(view.context, t.clazz)
+                view.context.startActivity(intent)
+            }
+        })
+        recycler_view.adapter = textAdapter
         recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 
@@ -35,30 +44,4 @@ abstract class BaseActivityListActivity : BaseActivity() {
 
 data class ActivityBean(val name: String, val clazz: Class<out Any>) {
     constructor(context: Context, clazz: Class<out Any>) : this(context.getTitleFromRes(clazz), clazz)
-}
-
-class ActivityAdapter(mContext: Context, mData: List<ActivityBean>) : BaseRecyclerViewAdapter<ActivityBean>(mContext, mData) {
-    override fun onCreateViewHolder(itemView: View): BaseRecyclerViewHolder<ActivityBean> {
-        return ActivityViewHolder(itemView)
-    }
-
-    override fun getLayoutResId(): Int {
-        return R.layout.item_activity
-    }
-
-    override fun onItemClick(t: ActivityBean) {
-        super.onItemClick(t)
-        val intent = Intent(mContext, t.clazz)
-        mContext.startActivity(intent)
-    }
-}
-
-class ActivityViewHolder(itemView: View) : BaseRecyclerViewHolder<ActivityBean>(itemView) {
-    private val mTvName: TextView by lazy {
-        itemView.findViewById<TextView>(R.id.tv_title)
-    }
-
-    override fun bindTo(t: ActivityBean, position: Int) {
-        mTvName.text = t.name
-    }
 }

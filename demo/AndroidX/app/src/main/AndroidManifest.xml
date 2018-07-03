@@ -3,7 +3,7 @@
     package="com.pingfangx.demo.androidx">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -15,9 +15,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pingfangx.com"
+                    android:scheme="xx" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.view.textview.TextViewBoldActivity" />
+        <activity android:name=".activity.view.ViewListActivity" />
+        <activity android:name=".activity.view.textview.TextViewBoldActivity" />
+        <activity android:name=".activity.view.textview.TextViewSkewActivity" />
+        <activity android:name=".activity.thirdparty.ThirdPartyListActivity" />
+        <activity android:name=".activity.thirdparty.map.navigation.MapNavigationActivity" />
     </application>
 
 </manifest>

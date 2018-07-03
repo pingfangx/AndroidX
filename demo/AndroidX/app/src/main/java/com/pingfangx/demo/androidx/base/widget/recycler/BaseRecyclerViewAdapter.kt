@@ -13,20 +13,23 @@ import com.pingfangx.demo.androidx.base.ViewLoader
  * @author pingfangx
  * @date 2018/7/2
  */
-abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, private val mData: List<T>) : RecyclerView.Adapter<BaseRecyclerViewHolder<T>>(), ViewLoader, OnItemClickListener {
-
-    private val mOnItemClickListener: OnItemClickListener? = null
+abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, private val mData: List<T>) : RecyclerView.Adapter<BaseRecyclerViewHolder<T>>(), ViewLoader {
+    var onItemClickListener: OnItemClickListener<T>? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<T> {
         val itemView = onCreateItemView(parent, viewType)
         itemView ?: let {
             throw RuntimeException("The item view should not be null.")
         }
         val viewHolder = onCreateViewHolder(itemView)
-        if (mOnItemClickListener != null) {
-            viewHolder.setOnItemClickListener(mOnItemClickListener)
-        } else {
-            //作默认处理
-            viewHolder.setOnItemClickListener(this)
+        viewHolder.onItemClickListener = object : BaseRecyclerViewHolder.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                if (position > -1 && position < mData.size) {
+                    val t = mData[position]
+                    t?.let {
+                        onItemClick(view, position, t)
+                    }
+                }
+            }
         }
         return viewHolder
     }
@@ -55,20 +58,19 @@ abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, private val mDa
         holder.bindTo(mData[position], position)
     }
 
-    //点击 item
-    override fun onItemClick(view: View, position: Int) {
-        if (position > -1 && position < mData.size) {
-            val t = mData[position]
-            t?.let {
-                onItemClick(t)
-            }
-        }
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener<T>): BaseRecyclerViewAdapter<T> {
+        this.onItemClickListener = onItemClickListener
+        return this
     }
 
     /**
      * 点击了 item
      */
-    protected open fun onItemClick(t: T) {
+    protected open fun onItemClick(view: View, position: Int, t: T) {
+        onItemClickListener?.onItemClick(view, position, t)
+    }
 
+    interface OnItemClickListener<T> {
+        fun onItemClick(view: View, position: Int, t: T)
     }
 }

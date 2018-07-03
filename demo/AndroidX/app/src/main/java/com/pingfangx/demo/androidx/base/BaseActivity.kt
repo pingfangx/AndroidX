@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_base_activity_list.*
+import kotlinx.android.synthetic.main.activity_base_list.*
 import org.jetbrains.anko.contentView
 
 /**
@@ -62,6 +62,5 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
         }
 
     }
-
 
 }

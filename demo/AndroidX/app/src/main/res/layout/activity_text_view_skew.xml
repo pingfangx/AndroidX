@@ -13,21 +13,32 @@
 
     <TextView
         style="@style/tv.20"
-        android:text="中文 test 使用 textStyle"
-        android:textStyle="bold" />
+        android:text="中文 test 使用 textStyle -0.25"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/tv_use_typeface"
         style="@style/tv.20"
-        android:text="中文 test 使用 setTypeface，同上" />
-
-    <TextView
-        style="@style/tv.20"
-        android:text="@string/text_view_bold_use_tag" />
+        android:text="中文 test 使用 typeface -0.25" />
 
     <TextView
         android:id="@+id/tv_use_paint"
         style="@style/tv.20"
-        android:text="中文 test 使用 paint，较细" />
+        android:text="中文 test 使用 paint -0.25" />
+
+    <TextView
+        android:id="@+id/tv_1"
+        style="@style/tv.20"
+        android:text="中文 test 使用 -0.5" />
+
+    <TextView
+        android:id="@+id/tv_2"
+        style="@style/tv.20"
+        android:text="中文 test 使用 -1" />
+
+    <TextView
+        android:id="@+id/tv_3"
+        style="@style/tv.20"
+        android:text="中文 test 使用 +0.25" />
 
 </LinearLayout>

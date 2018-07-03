@@ -1,6 +1,7 @@
 package com.pingfangx.demo.androidx
 
-import com.pingfangx.demo.androidx.activity.view.textview.TextViewBoldActivity
+import com.pingfangx.demo.androidx.activity.thirdparty.ThirdPartyListActivity
+import com.pingfangx.demo.androidx.activity.view.ViewListActivity
 import com.pingfangx.demo.androidx.base.ActivityBean
 import com.pingfangx.demo.androidx.base.BaseActivityListActivity
 
@@ -10,7 +11,8 @@ import com.pingfangx.demo.androidx.base.BaseActivityListActivity
 class MainActivity : BaseActivityListActivity() {
     override fun generateActivityList(): MutableList<ActivityBean> {
         val list = mutableListOf<ActivityBean>()
-        list.add(ActivityBean(this, TextViewBoldActivity::class.java))
+        list.add(ActivityBean(this, ViewListActivity::class.java))
+        list.add(ActivityBean(this, ThirdPartyListActivity::class.java))
         return list
     }
 }

@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_text_view_bold.*
 class TextViewBoldActivity : BaseActivity() {
     override fun initViews() {
         super.initViews()
-        tv_set_typeface.setTypeface(null, Typeface.BOLD)
-        tv_set_fake_bold_text.paint.isFakeBoldText = true
+        tv_use_typeface.setTypeface(null, Typeface.BOLD)
+        tv_use_paint.paint.isFakeBoldText = true
     }
 }
