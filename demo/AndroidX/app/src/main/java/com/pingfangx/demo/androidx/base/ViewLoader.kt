@@ -10,7 +10,7 @@ interface ViewLoader {
     /**
      * 布局资源 id
      */
-    fun getItemLayoutResId(): Int
+    fun getLayoutResId(): Int
 
     /**
      * 初始化

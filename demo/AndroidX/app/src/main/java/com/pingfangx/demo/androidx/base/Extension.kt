@@ -1,5 +1,6 @@
 package com.pingfangx.demo.androidx.base
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 
@@ -10,26 +11,61 @@ import android.util.Log
  * @date 2018/7/2
  */
 
-
-fun Context.getTitleResId(clazz: Class<out Any>): Int {
-    var name = clazz.simpleName
-    name = name.removeSuffix("Activity")
-    name = "title_" + name.camelToUnderline()
-    return this.resources.getIdentifier(name, "string", packageName)
+/**
+ * 获取资源 id
+ * @param name 名字
+ * @param defType 类型，默认 string
+ * @param prefix 前缀
+ */
+fun Context.getIdentifier(name: String = "", defType: String = "string", prefix: String = ""): Int {
+    //处理名字
+    var resName = if (name.isEmpty()) {
+        javaClass.getUnderlineNameWithoutActivity()
+    } else {
+        name
+    }
+    //添加前缀
+    if (prefix.isNotEmpty()) {
+        resName = if (!prefix.endsWith("_")) {
+            prefix + "_" + resName
+        } else {
+            prefix + resName
+        }
+    }
+    return resources.getIdentifier(resName, defType, packageName)
 }
 
+/**
+ * 获取默认的布局资源 id
+ */
+fun Activity.getDefaultLayoutResId(): Int {
+    return getIdentifier(defType = "layout", prefix = "activity")
+}
+
+/**
+ * 将 Activity 名转为下划线名，同时去掉末尾的 Activity
+ */
+fun Class<out Any>.getUnderlineNameWithoutActivity(): String {
+    return this.simpleName.removeSuffix("Activity").camelToUnderline()
+}
+
+
+/**
+ * 获取标题资源
+ */
 fun Context.getTitleFromRes(clazz: Class<out Any>): String {
-    val titleResId = this.getTitleResId(clazz)
-    if (titleResId == 0) {
-        return ""
+    val titleResId = getIdentifier(clazz.getUnderlineNameWithoutActivity(), prefix = "title")
+    return if (titleResId == 0) {
+        ""
     } else {
-        return try {
-            this.getString(titleResId)
+        try {
+            getString(titleResId)
         } catch (e: Exception) {
             ""
         }
     }
 }
+
 
 /**
  * 驼峰转下划线

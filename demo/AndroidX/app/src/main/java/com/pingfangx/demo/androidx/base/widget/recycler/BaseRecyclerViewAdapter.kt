@@ -13,7 +13,7 @@ import com.pingfangx.demo.androidx.base.ViewLoader
  * @author pingfangx
  * @date 2018/7/2
  */
-abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, val mData: List<T>) : RecyclerView.Adapter<BaseRecyclerViewHolder<T>>(), ViewLoader, OnItemClickListener {
+abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, private val mData: List<T>) : RecyclerView.Adapter<BaseRecyclerViewHolder<T>>(), ViewLoader, OnItemClickListener {
 
     private val mOnItemClickListener: OnItemClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<T> {
@@ -32,15 +32,15 @@ abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, val mData: List
     }
 
     protected open fun onCreateItemView(parent: ViewGroup, viewType: Int): View? {
-        val layoutResId = getItemLayoutResId()
-        if (layoutResId > 0) {
-            return LayoutInflater.from(mContext).inflate(layoutResId, parent, false)
+        val layoutResId = getLayoutResId()
+        return if (layoutResId > 0) {
+            LayoutInflater.from(mContext).inflate(layoutResId, parent, false)
         } else {
-            return null;
+            null
         }
     }
 
-    override fun getItemLayoutResId(): Int {
+    override fun getLayoutResId(): Int {
         return 0
     }
 

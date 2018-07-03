@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        style="@style/tv.20"
+        android:text="中文 test 正常" />
+
+    <TextView
+        style="@style/tv.20"
+        android:text="中文 test 使用 textStyle"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_set_typeface"
+        style="@style/tv.20"
+        android:text="中文 test 使用 setTypeface，同上" />
+
+    <TextView
+        style="@style/tv.20"
+        android:text="@string/text_view_bold_use_tag" />
+
+    <TextView
+        android:id="@+id/tv_set_fake_bold_text"
+        style="@style/tv.20"
+        android:text="中文 test 使用 setFakeBoldText，较细" />
+
+</LinearLayout>

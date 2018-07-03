@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_base_activity_list.*
  * @date 2018/7/2
  */
 abstract class BaseActivityListActivity : BaseActivity() {
-    override fun getItemLayoutResId(): Int {
+    override fun getLayoutResId(): Int {
         return R.layout.activity_base_activity_list
     }
 
@@ -42,7 +42,7 @@ class ActivityAdapter(mContext: Context, mData: List<ActivityBean>) : BaseRecycl
         return ActivityViewHolder(itemView)
     }
 
-    override fun getItemLayoutResId(): Int {
+    override fun getLayoutResId(): Int {
         return R.layout.item_activity
     }
 

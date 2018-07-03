@@ -3,4 +3,10 @@
 
     <!--各标题-->
     <string name="title_text_view_bold">字体加粗</string>
+    <string name="tips_text_view_bold">
+各方法最终都作用于字体或 Paint\n
+除对 Paint 直接操作外，textStyle，setTypeface，StyleSpan，b 标签这几种方法\n
+最后都会使用字体，判断字体如果没有加粗，再设置 Paint#setFakeBoldText
+    </string>
+    <string name="text_view_bold_use_tag"><b>中文 test 使用 b 标签,同上</b></string>
 </resources>

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.view.TextViewBoldActivity" />
+            android:name=".activity.view.textview.TextViewBoldActivity" />
     </application>
 
 </manifest>

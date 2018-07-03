@@ -1,6 +1,6 @@
 package com.pingfangx.demo.androidx
 
-import com.pingfangx.demo.androidx.activity.view.TextViewBoldActivity
+import com.pingfangx.demo.androidx.activity.view.textview.TextViewBoldActivity
 import com.pingfangx.demo.androidx.base.ActivityBean
 import com.pingfangx.demo.androidx.base.BaseActivityListActivity
 
