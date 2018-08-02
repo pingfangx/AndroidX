@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_1"
+            style="@style/tv"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:onClick="onClickTvShowDrawer"
+            android:text="显示左抽屉" />
+
+        <TextView
+            android:id="@+id/tv_2"
+            style="@style/tv"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:onClick="onClickTvShowDrawer"
+            android:text="显示右抽屉" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_drawer_1"
+        style="@style/tv"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:text="抽屉布局1" />
+
+    <TextView
+        android:id="@+id/tv_drawer_2"
+        style="@style/tv"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:text="抽屉布局2" />
+</android.support.v4.widget.DrawerLayout>

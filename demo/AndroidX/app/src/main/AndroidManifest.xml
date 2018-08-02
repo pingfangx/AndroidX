@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.view.ViewListActivity" />
+        <activity android:name=".activity.view.material.DrawerLayoutActivity" />
         <activity android:name=".activity.view.textview.TextViewBoldActivity" />
         <activity android:name=".activity.view.textview.TextViewSkewActivity" />
         <activity android:name=".activity.thirdparty.ThirdPartyListActivity" />
