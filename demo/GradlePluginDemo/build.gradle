@@ -3,16 +3,18 @@
 buildscript {
     ext.kotlin_version = '1.2.50'
     repositories {
-        //目录内放自定义的 proguard.jar
-        flatDir { dirs 'proguard' }
         google()
         jcenter()
+        maven{
+            url uri('repo')
+        }
     }
     dependencies {
-        //虽然没有版本号，但还是可以正确使用
-        classpath 'proguard.io:proguard:5.0'
         classpath 'com.android.tools.build:gradle:3.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //引入后，插件源码会报已存在，因为是在一个 Demo 项目中，所以报已存在。
+        classpath 'com.pingfangx:greetingplugin:1.0.0'
+        classpath 'com.pingfangx:lintx:1.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -28,4 +30,12 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+apply plugin: 'com.pingfangx.greeting'
+
+//新创建一个 task 名为 greeting
+task greeting(type: com.pingfangx.plugin.GreetingTask) {
+    //配置参数
+    greeting = 'from comsumer'
 }

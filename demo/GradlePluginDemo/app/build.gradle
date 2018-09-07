@@ -1,0 +1,103 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'com.pingfangx.lintx'
+
+lintx {
+    level 2
+}
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.pingfangx.demo.gradleplugindemo"
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:28.0.0-rc02'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+//https://docs.gradle.org/4.3.1/userguide/custom_plugins.html
+
+//41.2. Writing a simple plugin
+//
+//class GreetingPlugin implements Plugin<Project>{
+//
+//    @Override
+//    void apply(Project project) {
+//        project.task("hello"){
+//            doLast {
+//                println 'Hello from the GreetingPlugin'
+//            }
+//        }
+//    }
+//}
+//
+//apply plugin: GreetingPlugin
+
+// Making the plugin configurable
+//class GreetingPluginExtension{
+//    String msg='Hello from the GreetingPlugin'
+//}
+//
+//class GreetingPlugin implements Plugin<Project>{
+//    @Override
+//    void apply(Project project) {
+//        //添加扩展
+//        def extension=project.extensions.create('greeting',GreetingPluginExtension)
+//        project.task('hello'){
+//            doLast {
+//                println(extension.msg)
+//            }
+//        }
+//    }
+//}
+//
+//apply plugin: GreetingPlugin
+//
+//greeting{
+//    msg='Hi from extension'
+//}
+
+//可以在项目 build.gradle 中使用，也可以在模块中使用
+//区别只是仓库的相对地址，以及任务名前面多了模块名
+//buildscript {
+//    repositories {
+//        maven {
+//            //指定仓库地址，相对于当前 gradle 文件
+//            url uri('../repo')
+//        }
+//    }
+//    dependencies {
+//        //指定依赖的插件
+//        //classpath group: 'com.pingfangx', name: 'greetingplugin', version: '1.0.0'
+//        classpath 'com.pingfangx:greetingplugin:1.0.0'
+//    }
+//}
+//apply plugin: 'com.pingfangx.greeting'
+//
+////新创建一个 task 名为 greeting
+//task greeting(type: com.pingfangx.plugin.GreetingTask) {
+//    //配置参数
+//    greeting = 'from comsumer'
+//}
