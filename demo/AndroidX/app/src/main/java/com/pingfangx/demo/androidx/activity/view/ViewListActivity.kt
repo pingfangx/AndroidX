@@ -1,5 +1,6 @@
 package com.pingfangx.demo.androidx.activity.view
 
+import com.pingfangx.demo.androidx.activity.view.imageview.ImageViewScaleTypeActivity
 import com.pingfangx.demo.androidx.activity.view.material.DrawerLayoutActivity
 import com.pingfangx.demo.androidx.activity.view.textview.TextViewBoldActivity
 import com.pingfangx.demo.androidx.activity.view.textview.TextViewSkewActivity
@@ -16,6 +17,7 @@ class ViewListActivity : BaseActivityListActivity() {
     override fun generateActivityList(): MutableList<ActivityBean> {
         val list = mutableListOf<ActivityBean>()
         list.add(ActivityBean(this, DrawerLayoutActivity::class.java))
+        list.add(ActivityBean(this, ImageViewScaleTypeActivity::class.java))
         list.add(ActivityBean(this, TextViewBoldActivity::class.java))
         list.add(ActivityBean(this, TextViewSkewActivity::class.java))
         return list
