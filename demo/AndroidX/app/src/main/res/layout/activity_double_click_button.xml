@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_tips"
+        style="@style/tv.tips" />
+
+    <com.pingfangx.demo.androidx.activity.view.textview.DoubleClickableButtonByPostRunnable
+        android:id="@+id/btn_0"
+        style="@style/btn"
+        android:text="ByPostRunnable" />
+
+    <com.pingfangx.demo.androidx.activity.view.textview.DoubleClickableButtonBySendMessage
+        android:id="@+id/btn_1"
+        style="@style/btn"
+        android:text="BySendMessage" />
+</LinearLayout>
