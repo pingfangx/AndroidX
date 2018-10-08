@@ -49,8 +49,8 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
      * 设置提示
      */
     private fun initTips() {
-        val tipsResId = getIdentifier(prefix = "tips")
-        if (tipsResId != 0) {
+        val tips = getTips()
+        if (tips.isNotEmpty()) {
             //需要设置
             var tvTips = tv_tips
             if (tvTips == null) {
@@ -58,9 +58,19 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
                 tvTips = TextView(this)
                 (contentView as ViewGroup).addView(tvTips)
             }
-            tvTips.setText(tipsResId)
+            tvTips.text = tips
         }
+    }
 
+    /**
+     * 获取 tips
+     */
+    protected open fun getTips(): CharSequence {
+        val tipsResId = getIdentifier(prefix = "tips")
+        if (tipsResId != 0) {
+            return getText(tipsResId)
+        }
+        return ""
     }
 
 }
