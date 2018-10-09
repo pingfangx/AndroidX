@@ -45,5 +45,5 @@ open class BaseTextViewHolder<T>(itemView: View) : BaseRecyclerViewHolder<T>(ite
     /**
      * 获取展示的文字
      */
-    protected open fun getText(t: T): String = t.toString()
+    protected open fun getText(t: T): CharSequence = t.toString()
 }

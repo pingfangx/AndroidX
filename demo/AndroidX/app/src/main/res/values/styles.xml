@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -16,6 +16,10 @@
 
     <style name="tv.20" parent="tv">
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="tv.20.singleLine" parent="tv.20">
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="tv.tips" parent="tv">

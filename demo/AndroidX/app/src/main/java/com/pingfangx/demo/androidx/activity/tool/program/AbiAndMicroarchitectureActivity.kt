@@ -1,7 +1,7 @@
 package com.pingfangx.demo.androidx.activity.tool.program
 
-import com.pingfangx.demo.androidx.activity.tool.getSupportedAbi
 import com.pingfangx.demo.androidx.base.BaseTipsActivity
+import com.pingfangx.demo.androidx.base.extension.getSupportedAbi
 
 /**
  * Abi 与微架构

@@ -19,4 +19,11 @@
 要想取消裁切，可以在右侧添加一个不可见字符，或是改为作用于字体的方法。
     </string>
     <string name="tips_map_navigation">基本都是使用 uri 启动 Activity\n各地图有不同的 uri 规则</string>
+
+    <string name="dialog_app_list_action_copy_package_name">复制包名</string>
+    <string name="dialog_app_list_action_copy_signature">复制签名</string>
+    <string-array name="dialog_app_list_action_array">
+        <item>@string/dialog_app_list_action_copy_package_name</item>
+        <item>@string/dialog_app_list_action_copy_signature</item>
+    </string-array>
 </resources>
