@@ -14,14 +14,21 @@
         android:layout_marginTop="30dp"
         android:src="@drawable/ic_blue" />
 
-    <com.pingfangx.bitmapdemo.CornerImageView
+    <com.pingfangx.bitmapdemo.CornerImageViewByRoundRect
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:src="@drawable/ic_blue" />
 
-    <com.pingfangx.bitmapdemo.CornerImageView2
+    <com.pingfangx.bitmapdemo.CornerImageViewByBitmapShader
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_blue" />
+
+    <com.pingfangx.bitmapdemo.ConerImageViewByPath
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
