@@ -55,11 +55,12 @@ fun Class<out Any>.getUnderlineNameWithoutActivity(): String {
  * 根据 clazz 的类名，生成字符串作为资源名，用资源名查找标题
  * 如果没有找到标题，直接返回类名（移除末尾的Activity）
  */
-fun Context.getTitleFromRes(clazz: Class<out Any>): String {
-    val titleResId = getIdentifier(clazz.getUnderlineNameWithoutActivity(), prefix = "title")
+fun Context.getTitleFromRes(className: String): String {
+    val activityNameWithoutSuffix = className.split(".").last().removeSuffix("Activity")
+    val titleResId = getIdentifier(activityNameWithoutSuffix, prefix = "title")
     return if (titleResId == 0) {
         //如果没声明标题，直接取名字
-        clazz.simpleName.removeSuffix("Activity")
+        activityNameWithoutSuffix
     } else {
         try {
             getString(titleResId)
@@ -67,6 +68,10 @@ fun Context.getTitleFromRes(clazz: Class<out Any>): String {
             ""
         }
     }
+}
+
+fun Context.getTitleFromRes(clazz: Class<out Any>): String {
+    return this.getTitleFromRes(clazz.simpleName)
 }
 
 

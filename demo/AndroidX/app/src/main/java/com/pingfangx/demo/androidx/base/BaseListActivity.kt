@@ -16,6 +16,9 @@ abstract class BaseListActivity : BaseActivity() {
     protected val mRecyclerView by lazy {
         recycler_view
     }
+    protected val mAdapter by lazy {
+        createAdapter()
+    }
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_base_list
@@ -28,7 +31,7 @@ abstract class BaseListActivity : BaseActivity() {
             mRecyclerView.addItemDecoration(itemDecoration)
         }
         mRecyclerView.layoutManager = createLayoutManager()
-        mRecyclerView.adapter = createAdapter()
+        mRecyclerView.adapter = mAdapter
     }
 
 
