@@ -26,6 +26,7 @@
                     android:scheme="xx" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.android.graphics.drawable.CustomDrawableActivity" />
         <activity android:name=".activity.thirdparty.map.navigation.MapNavigationActivity" />
         <activity android:name=".activity.tool.program.AbiAndMicroarchitectureActivity" />
         <activity android:name=".activity.tool.program.AppListActivity" />

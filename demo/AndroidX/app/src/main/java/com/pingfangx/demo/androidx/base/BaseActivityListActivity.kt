@@ -61,8 +61,9 @@ abstract class BaseActivityListActivity : BaseListActivity() {
     private fun toggle(position: Int, activityItem: ActivityItem, open: Boolean) {
         if (open) {
             //添加
-            mActivityList.addAll(position + 1, activityItem.children)
-            mAdapter.notifyItemRangeInserted(position + 1, activityItem.children.size)
+            val allChildren = activityItem.listUntilChildren()
+            mActivityList.addAll(position + 1, allChildren)
+            mAdapter.notifyItemRangeInserted(position + 1, allChildren.size)
         } else {
             //移除，因为关闭时可能有多个 child 展示，所以使用 listAllChildren
             val allChildren = activityItem.listAllChildren()
@@ -205,6 +206,24 @@ abstract class BaseActivityListActivity : BaseListActivity() {
                 allChildren.addAll(children)
                 for (child in children) {
                     if (child.isParent) {
+                        allChildren.addAll(child.listAllChildren())
+                    }
+                }
+            }
+            return allChildren
+        }
+
+        /**
+         * 用于展开时列出，类似拼合包的功能，如果包中只有一个 child ，则继承展开
+         */
+        fun listUntilChildren(): MutableList<ActivityItem> {
+            val allChildren: MutableList<ActivityItem> = mutableListOf()
+            if (isParent) {
+                allChildren.addAll(children)
+                if (children.size == 1) {
+                    val child = children[0]
+                    if (child.isParent) {
+                        //是 parent，继续展开
                         allChildren.addAll(child.listAllChildren())
                     }
                 }
