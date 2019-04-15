@@ -23,7 +23,7 @@ class ListViewActivity : BaseActivity() {
         listView.adapter = Adapter(this, R.layout.item_base_text, R.id.tv_title, data)
     }
 
-    private class Adapter(context: Context?, resource: Int, textViewResourceId: Int, objects: MutableList<Int>?) : ArrayAdapter<Int>(context, resource, textViewResourceId, objects) {
+    private class Adapter(context: Context, resource: Int, textViewResourceId: Int, objects: MutableList<Int>) : ArrayAdapter<Int>(context, resource, textViewResourceId, objects) {
         override fun getItemViewType(position: Int): Int {
             return position % 2
         }

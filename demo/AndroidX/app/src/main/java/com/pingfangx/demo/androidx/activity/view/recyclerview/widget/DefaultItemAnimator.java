@@ -19,8 +19,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
@@ -28,6 +26,9 @@ import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerVie
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 
 /**
  * This implementation of {@link com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView.ItemAnimator} provides basic

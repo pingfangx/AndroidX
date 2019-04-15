@@ -1,7 +1,7 @@
 package com.pingfangx.demo.androidx.base
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
 import com.pingfangx.demo.androidx.activity.view.textview.TextViewBoldActivity
 import org.junit.Test
 import org.junit.runner.RunWith

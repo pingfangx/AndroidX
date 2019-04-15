@@ -1,14 +1,12 @@
 package com.pingfangx.demo.androidx.activity.view.support
 
 import android.content.Context
-import android.support.v4.view.NestedScrollingParent
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.OverScroller
+import androidx.core.view.NestedScrollingParent
+import androidx.core.view.ViewCompat
 import com.pingfangx.demo.androidx.R
 import com.pingfangx.demo.androidx.base.BaseActivity
 import com.pingfangx.demo.androidx.base.widget.recycler.BaseTextAdapter
@@ -24,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_nested_scrolling.*
 class NestedScrollingActivity : BaseActivity() {
     override fun initViews() {
         super.initViews()
-        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         val data = mutableListOf<String>()
         for (i in 0..100) {
             data.add(i.toString())
@@ -35,7 +33,7 @@ class NestedScrollingActivity : BaseActivity() {
 
 class NestedScrollingLinearLayout : LinearLayout, NestedScrollingParent {
     private var mTopViewHeight = 0
-    private var mRecyclerView: RecyclerView? = null
+    private var mRecyclerView: androidx.recyclerview.widget.RecyclerView? = null
     private val mScroller by lazy {
         OverScroller(context)
     }
@@ -75,7 +73,9 @@ class NestedScrollingLinearLayout : LinearLayout, NestedScrollingParent {
     }
 
     override fun onNestedPreFling(target: View, velocityX: Float, velocityY: Float): Boolean {
-        return if (scrollY >= mTopViewHeight) {
+        return if (scrollY >= mTopViewHeight || (scrollY == 0 && velocityY < 0)) {
+            // 如果 >= mTopViewHeight 说明顶部已经完全滑出，不再需要处理
+            // 如果为 0 表示在顶部，此时如果向下滑，也不需要处理
             false
         } else {
             fling(velocityY.toInt())

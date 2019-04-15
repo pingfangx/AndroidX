@@ -18,12 +18,13 @@ package com.pingfangx.demo.androidx.activity.view.recyclerview.widget;
 
 import android.content.Context;
 import android.graphics.PointF;
-import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+
+import androidx.annotation.Nullable;
 
 /**
  * {@link com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView.SmoothScroller} implementation which uses a {@link LinearInterpolator} until

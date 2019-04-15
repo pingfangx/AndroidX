@@ -1,7 +1,6 @@
 package com.pingfangx.demo.androidx.activity.view.imageview
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,7 +18,7 @@ import com.pingfangx.demo.androidx.base.widget.recycler.BaseRecyclerViewHolder
 class ImageViewScaleTypeActivity : BaseListActivity() {
     private val mData: MutableList<ScaleTypeBean> = mutableListOf()
 
-    override fun createAdapter(): RecyclerView.Adapter<*> {
+    override fun createAdapter(): androidx.recyclerview.widget.RecyclerView.Adapter<*> {
         mData.add(ScaleTypeBean(ImageView.ScaleType.MATRIX,"绘图时使用图像矩阵缩放。可以使用 setImageMatrix(Matrix) 设置图像矩阵。"))
         mData.add(ScaleTypeBean(ImageView.ScaleType.FIT_XY, "独立地在 X 和 Y 中缩放，以便 src 完全匹配 dst。这可能会改变 src 的宽高比。"))
         mData.add(ScaleTypeBean(ImageView.ScaleType.FIT_START, "计算将保持原始 src 宽高比的比例，但也将确保 src 完全适合 dst。至少一个轴(X 或 Y)将精确匹配。START 将结果与 dst 的左边和上边对齐。"))

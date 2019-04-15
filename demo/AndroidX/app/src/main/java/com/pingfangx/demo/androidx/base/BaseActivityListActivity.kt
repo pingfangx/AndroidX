@@ -3,7 +3,6 @@ package com.pingfangx.demo.androidx.base
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.pingfangx.demo.androidx.base.widget.recycler.BaseRecyclerViewAdapter
 import com.pingfangx.demo.androidx.base.widget.recycler.BaseTextAdapter
@@ -36,7 +35,7 @@ abstract class BaseActivityListActivity : BaseListActivity() {
         return activityList
     }
 
-    override fun createAdapter(): RecyclerView.Adapter<*> {
+    override fun createAdapter(): androidx.recyclerview.widget.RecyclerView.Adapter<*> {
         return object : BaseTextAdapter<ActivityItem>(this, mActivityList) {
             override fun getItemText(t: ActivityItem): String {
                 return t.activityName

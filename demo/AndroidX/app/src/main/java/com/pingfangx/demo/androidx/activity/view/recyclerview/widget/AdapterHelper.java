@@ -16,12 +16,13 @@
 
 package com.pingfangx.demo.androidx.activity.view.recyclerview.widget;
 
-import android.support.v4.util.Pools;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.core.util.Pools;
 
 /**
  * Helper class that can enqueue and process adapter update operations.

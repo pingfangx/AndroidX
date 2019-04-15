@@ -1,6 +1,5 @@
 package com.pingfangx.demo.androidx.base.widget.recycler
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 
 /**
@@ -9,7 +8,7 @@ import android.view.View
  * @author pingfangx
  * @date 2018/7/2
  */
-abstract class BaseRecyclerViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+abstract class BaseRecyclerViewHolder<T>(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     var onItemClickListener: OnItemClickListener? = null
 
     init {

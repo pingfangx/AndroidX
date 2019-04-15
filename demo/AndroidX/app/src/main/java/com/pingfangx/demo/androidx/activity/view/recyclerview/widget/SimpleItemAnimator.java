@@ -16,13 +16,14 @@
 
 package com.pingfangx.demo.androidx.activity.view.recyclerview.widget;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
 import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView.Adapter;
 import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView.ViewHolder;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * A wrapper class for ItemAnimator that records View bounds and decides whether it should run

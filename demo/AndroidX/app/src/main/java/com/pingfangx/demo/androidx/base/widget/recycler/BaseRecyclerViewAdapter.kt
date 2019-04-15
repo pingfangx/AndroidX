@@ -1,7 +1,6 @@
 package com.pingfangx.demo.androidx.base.widget.recycler
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import com.pingfangx.demo.androidx.base.ViewLoader
  * @author pingfangx
  * @date 2018/7/2
  */
-abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, private val mData: List<T>) : RecyclerView.Adapter<BaseRecyclerViewHolder<T>>(), ViewLoader {
+abstract class BaseRecyclerViewAdapter<T>(val mContext: Context, private val mData: List<T>) : androidx.recyclerview.widget.RecyclerView.Adapter<BaseRecyclerViewHolder<T>>(), ViewLoader {
     var onItemClickListener: OnItemClickListener<T>? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<T> {
         val itemView = onCreateItemView(parent, viewType)

@@ -41,7 +41,7 @@ class RecyclerViewScrollActivity : BaseActivity() {
         /**
          * 获取 item 展示的文字
          */
-        protected open fun getItemText(t: T): String = t.toString()
+        fun getItemText(t: T): String = t.toString()
 
         override fun getLayoutResId(): Int {
             return R.layout.item_base_text

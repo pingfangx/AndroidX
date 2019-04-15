@@ -17,11 +17,12 @@
 package com.pingfangx.demo.androidx.activity.view.recyclerview.widget.helper;
 
 import android.graphics.Canvas;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.recyclerview.R;
 import android.view.View;
 
+import com.pingfangx.demo.androidx.R;
 import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView;
+
+import androidx.core.view.ViewCompat;
 
 /**
  * Package private class to keep implementations. Putting them inside ItemTouchUIUtil makes them

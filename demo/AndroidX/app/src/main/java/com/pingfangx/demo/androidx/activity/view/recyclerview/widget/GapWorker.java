@@ -15,8 +15,6 @@
  */
 package com.pingfangx.demo.androidx.activity.view.recyclerview.widget;
 
-import android.support.annotation.Nullable;
-import android.support.v4.os.TraceCompat;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -24,6 +22,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.Nullable;
+import androidx.core.os.TraceCompat;
 
 final class GapWorker implements Runnable {
 

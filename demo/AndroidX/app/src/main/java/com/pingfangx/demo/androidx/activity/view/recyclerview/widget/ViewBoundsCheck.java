@@ -16,11 +16,12 @@
 
 package com.pingfangx.demo.androidx.activity.view.recyclerview.widget;
 
-import android.support.annotation.IntDef;
 import android.view.View;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * A utility class used to check the boundaries of a given view within its parent view based on

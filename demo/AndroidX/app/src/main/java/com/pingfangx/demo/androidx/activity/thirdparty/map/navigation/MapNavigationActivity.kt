@@ -1,7 +1,5 @@
 package com.pingfangx.demo.androidx.activity.thirdparty.map.navigation
 
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.pingfangx.demo.androidx.R
 import com.pingfangx.demo.androidx.activity.thirdparty.map.navigation.app.*
@@ -23,14 +21,14 @@ class MapNavigationActivity : BaseTipsActivity() {
 
     override fun initViews() {
         super.initViews()
-        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
         val mapAppList = mutableListOf<BaseMapApp>()
         mapAppList.add(GaodeMapApp())
         mapAppList.add(BaiduMapApp())
         mapAppList.add(TencentMapApp())
         mapAppList.add(GoogleMapApp())
-        recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        recycler_view.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(this, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         recycler_view.adapter = object : BaseTextAdapter<BaseMapApp>(this, mapAppList) {
             override fun getItemText(t: BaseMapApp): String {
                 return t.appName

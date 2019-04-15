@@ -20,9 +20,6 @@ import android.content.Context;
 import android.graphics.PointF;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.RestrictTo;
-import android.support.v4.os.TraceCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +31,11 @@ import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.helper.Item
 
 import java.util.List;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import androidx.annotation.RestrictTo;
+import androidx.core.os.TraceCompat;
+import androidx.core.view.ViewCompat;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 import static com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView.NO_POSITION;
 import static com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView.VERBOSE_TRACING;
 

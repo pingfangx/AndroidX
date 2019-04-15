@@ -1,8 +1,5 @@
 package com.pingfangx.demo.androidx.base
 
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.pingfangx.demo.androidx.R
 import kotlinx.android.synthetic.main.activity_base_list.*
 
@@ -35,9 +32,9 @@ abstract class BaseListActivity : BaseActivity() {
     }
 
 
-    abstract fun createAdapter(): RecyclerView.Adapter<*>
+    abstract fun createAdapter(): androidx.recyclerview.widget.RecyclerView.Adapter<*>
 
-    protected open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(this)
+    protected open fun createLayoutManager(): androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
-    protected open fun createItemDecoration(): RecyclerView.ItemDecoration? = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+    protected open fun createItemDecoration(): androidx.recyclerview.widget.RecyclerView.ItemDecoration? = androidx.recyclerview.widget.DividerItemDecoration(this, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
 }

@@ -3,8 +3,6 @@ package com.pingfangx.demo.androidx.activity.tool.program
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.graphics.drawable.Drawable
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -12,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.pingfangx.demo.androidx.R
 import com.pingfangx.demo.androidx.base.BaseListActivity
 import com.pingfangx.demo.androidx.base.extension.copyToClipboard
@@ -40,7 +39,7 @@ class AppListActivity : BaseListActivity() {
     private var mFilterAppList: MutableList<PackageInfo> = mutableListOf()
     private val mAppAdapter = AppAdapter(this, mFilterAppList)
 
-    override fun createAdapter(): RecyclerView.Adapter<*> {
+    override fun createAdapter(): androidx.recyclerview.widget.RecyclerView.Adapter<*> {
         mAppList = getAppList()
         mFilterAppList = filterApp("")
         mAppAdapter.setOnItemClickListener(object : BaseRecyclerViewAdapter.OnItemClickListener<PackageInfo> {

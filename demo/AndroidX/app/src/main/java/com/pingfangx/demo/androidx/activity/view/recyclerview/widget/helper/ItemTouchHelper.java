@@ -22,10 +22,6 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.recyclerview.R;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
@@ -36,6 +32,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewParent;
 import android.view.animation.Interpolator;
 
+import com.pingfangx.demo.androidx.R;
 import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.LinearLayoutManager;
 import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView;
 import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerView.OnItemTouchListener;
@@ -43,6 +40,10 @@ import com.pingfangx.demo.androidx.activity.view.recyclerview.widget.RecyclerVie
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.core.view.ViewCompat;
 
 /**
  * This is a utility class to add swipe to dismiss and drag & drop support to RecyclerView.
