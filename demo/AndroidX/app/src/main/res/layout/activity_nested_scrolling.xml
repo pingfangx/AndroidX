@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pingfangx.demo.androidx.activity.view.support.NestedScrollingLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_top"
+        style="@style/tv.20"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#0000ff"
+        android:text="top" />
+
+    <TextView
+        android:id="@+id/tv_sticky"
+        style="@style/tv.20"
+        android:text="sticky" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</com.pingfangx.demo.androidx.activity.view.support.NestedScrollingLinearLayout>
