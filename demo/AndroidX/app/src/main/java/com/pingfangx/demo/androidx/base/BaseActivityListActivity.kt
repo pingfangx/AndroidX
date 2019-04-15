@@ -63,6 +63,18 @@ abstract class BaseActivityListActivity : BaseListActivity() {
             val allChildren = activityItem.listUntilChildren()
             mActivityList.addAll(position + 1, allChildren)
             mAdapter.notifyItemRangeInserted(position + 1, allChildren.size)
+            //展开到第一个 child
+            var firstChildIndex = 0
+            for ((i, child) in allChildren.withIndex()) {
+                if (child.isParent.not()) {
+                    firstChildIndex = i + 1
+                    break
+                }
+            }
+            if (firstChildIndex > 0) {
+                //如果为 0 表示没有 child 不需要滚动
+                mRecyclerView.scrollToPosition(position + firstChildIndex)
+            }
         } else {
             //移除，因为关闭时可能有多个 child 展示，所以使用 listAllChildren
             val allChildren = activityItem.listAllChildren()

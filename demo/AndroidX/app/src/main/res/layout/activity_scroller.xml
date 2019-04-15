@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pingfangx.demo.androidx.activity.android.widget.ScrollerTestView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/tv.20"
+        android:onClick="onClickTvScrollTo"
+        android:text="ScrollTo" />
+
+    <TextView
+        style="@style/tv.20"
+        android:layout_marginTop="40dp"
+        android:onClick="onClickTvScrollBy"
+        android:text="ScrollBy" />
+</com.pingfangx.demo.androidx.activity.android.widget.ScrollerTestView>

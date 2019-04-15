@@ -27,6 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.android.graphics.drawable.CustomDrawableActivity" />
+        <activity android:name=".activity.android.widget.ScrollerActivity" />
+        <activity android:name=".activity.androidx.core.view.NestedScrollingActivity" />
         <activity android:name=".activity.thirdparty.map.navigation.MapNavigationActivity" />
         <activity android:name=".activity.tool.program.AbiAndMicroarchitectureActivity" />
         <activity android:name=".activity.tool.program.AppListActivity" />
@@ -34,7 +36,6 @@
         <activity android:name=".activity.view.listview.ListViewActivity" />
         <activity android:name=".activity.view.material.DrawerLayoutActivity" />
         <activity android:name=".activity.view.recyclerview.RecyclerViewScrollActivity" />
-        <activity android:name=".activity.view.support.NestedScrollingActivity" />
         <activity android:name=".activity.view.textview.DoubleClickButtonActivity" />
         <activity android:name=".activity.view.textview.TextViewBoldActivity" />
         <activity android:name=".activity.view.textview.TextViewSkewActivity" />
