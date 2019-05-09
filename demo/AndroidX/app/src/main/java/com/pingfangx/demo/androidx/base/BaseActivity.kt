@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.pingfangx.demo.androidx.base.extension.INTENT_EXTRA_LAYOUT
+import com.pingfangx.demo.androidx.base.extension.INTENT_EXTRA_TITLE
 import kotlinx.android.synthetic.main.activity_base_list.*
 import org.jetbrains.anko.contentView
 
@@ -33,12 +35,22 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
     }
 
     override fun getLayoutResId(): Int {
-        return getDefaultLayoutResId()
+        val layoutResIdFromIntent = intent.getIntExtra(INTENT_EXTRA_LAYOUT, 0)
+        return if (layoutResIdFromIntent != 0) {
+            layoutResIdFromIntent
+        } else {
+            getDefaultLayoutResId()
+        }
     }
 
     override fun initViews() {
         super.initViews()
-        val title = this.getTitleFromRes(this::class.java)
+        val titleFromIntent: String? = intent.getStringExtra(INTENT_EXTRA_TITLE)
+        val title = if (titleFromIntent?.isNotEmpty() == true) {
+            titleFromIntent
+        } else {
+            getTitleFromRes(this::class.java)
+        }
         if (title.isNotEmpty()) {
             setTitle(title)
         }

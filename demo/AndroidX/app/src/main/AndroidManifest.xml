@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".activity.android.graphics.drawable.CustomDrawableActivity" />
         <activity android:name=".activity.android.widget.ScrollerActivity" />
+        <activity android:name=".activity.androidx.coordinatorlayout.widget.AppBarLayoutActivity" />
+        <activity android:name=".activity.androidx.coordinatorlayout.widget.CoordinatorLayoutActivity" />
         <activity android:name=".activity.androidx.core.view.NestedScrollingActivity" />
         <activity android:name=".activity.thirdparty.map.navigation.MapNavigationActivity" />
         <activity android:name=".activity.tool.program.AbiAndMicroarchitectureActivity" />
@@ -39,6 +41,7 @@
         <activity android:name=".activity.view.textview.DoubleClickButtonActivity" />
         <activity android:name=".activity.view.textview.TextViewBoldActivity" />
         <activity android:name=".activity.view.textview.TextViewSkewActivity" />
+        <activity android:name=".common.CommonActivity" />
     </application>
 
 </manifest>

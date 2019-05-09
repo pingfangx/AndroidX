@@ -23,6 +23,10 @@ abstract class BaseListActivity : BaseActivity() {
 
     override fun initViews() {
         super.initViews()
+        initRecyclerView()
+    }
+
+    open protected fun initRecyclerView() {
         val itemDecoration = createItemDecoration()
         if (itemDecoration != null) {
             mRecyclerView.addItemDecoration(itemDecoration)
