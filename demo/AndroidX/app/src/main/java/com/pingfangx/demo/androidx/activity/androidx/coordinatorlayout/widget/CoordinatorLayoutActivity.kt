@@ -17,7 +17,8 @@ open class CoordinatorLayoutActivity : MultipleLayoutDemoActivity() {
         super.initViews()
         addLayoutInfo(R.layout.activity_coordinator_layout_relative_layout, "RelativeLayout:FloatingActionButton 和 Snackbar")
         addLayoutInfo(R.layout.activity_coordinator_layout_snackbar, "CoordinatorLayout:FloatingActionButton 和 Snackbar")
-        addLayoutInfo(LayoutInfo(R.layout.activity_app_bar_layout, "AppBarLayout", AppBarLayoutActivity::class.java))
+        addLayoutInfo(LayoutInfo(0, "AppBarLayout", AppBarLayoutActivity::class.java))
+        addLayoutInfo(LayoutInfo(0, "CollapsingToolbarLayout", CollapsingToolbarLayoutActivity::class.java))
     }
 
     fun onClickFloatingActionButton(view: View) {

@@ -29,6 +29,9 @@
         <activity android:name=".activity.android.graphics.drawable.CustomDrawableActivity" />
         <activity android:name=".activity.android.widget.ScrollerActivity" />
         <activity android:name=".activity.androidx.coordinatorlayout.widget.AppBarLayoutActivity" />
+        <activity
+            android:name=".activity.androidx.coordinatorlayout.widget.CollapsingToolbarLayoutActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.androidx.coordinatorlayout.widget.CoordinatorLayoutActivity" />
         <activity android:name=".activity.androidx.core.view.NestedScrollingActivity" />
         <activity android:name=".activity.thirdparty.map.navigation.MapNavigationActivity" />

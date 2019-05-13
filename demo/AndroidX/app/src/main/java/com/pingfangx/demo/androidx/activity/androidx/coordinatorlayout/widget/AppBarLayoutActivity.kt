@@ -36,7 +36,7 @@ class AppBarLayoutActivity : BaseActivity() {
         menu.add(0, AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL, 0, "noScroll\n不滚动")
         menu.add(0, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL, 0, "scroll\n滚动相关，滑到顶才开始进入")
         menu.add(0, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED, 0, "scroll|exitUntilCollapsed\n退出时先折叠到最小高度")
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED, 0, "scroll|exitUntilCollapsed\n退出时折叠到最小高度")
         menu.add(0, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
                 or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS, 0, "scroll|enterAlways\n每次下滑都进入")
         menu.add(0, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
