@@ -72,6 +72,15 @@ abstract class BaseActivityListActivity : BaseListActivity() {
                 }
             }
             if (firstChildIndex > 0) {
+                //如果有 child 则将 parent 标记为展开
+                for ((i, child) in allChildren.withIndex()) {
+                    if (i >= firstChildIndex) {
+                        break
+                    }
+                    if (child.isParent) {
+                        child.isOpen = true
+                    }
+                }
                 //如果为 0 表示没有 child 不需要滚动
                 mRecyclerView.scrollToPosition(position + firstChildIndex)
             }
