@@ -44,6 +44,7 @@
         <activity android:name=".activity.view.textview.DoubleClickButtonActivity" />
         <activity android:name=".activity.view.textview.TextViewBoldActivity" />
         <activity android:name=".activity.view.textview.TextViewSkewActivity" />
+        <activity android:name=".activity.view.PreviewViewsActivity" />
         <activity android:name=".common.CommonActivity" />
     </application>
 

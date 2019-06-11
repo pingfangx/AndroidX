@@ -17,10 +17,6 @@ import com.pingfangx.demo.androidx.base.widget.recycler.BaseTextAdapter
  * @date 2019/5/9
  */
 abstract class MultipleLayoutDemoActivity : BaseListActivity() {
-    /**
-     * 是否是详情，复用同一个 Activity 来展示列表或详情，避免过多的 Activity
-     */
-    private var mIsDetail = false
 
     private val mLayoutList: MutableList<LayoutInfo> = mutableListOf()
 
@@ -39,13 +35,6 @@ abstract class MultipleLayoutDemoActivity : BaseListActivity() {
             layoutResIdFromIntent
         } else {
             super.getLayoutResId()
-        }
-    }
-
-    override fun initRecyclerView() {
-        if (mIsDetail.not()) {
-            //不是详情才需要处理列表
-            super.initRecyclerView()
         }
     }
 

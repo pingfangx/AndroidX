@@ -10,6 +10,10 @@ import kotlinx.android.synthetic.main.activity_base_list.*
  * @date 2018/9/19
  */
 abstract class BaseListActivity : BaseActivity() {
+    /**
+     * 是否是详情，复用同一个 Activity 来展示列表或详情，避免过多的 Activity
+     */
+    protected var mIsDetail = false
     protected val mRecyclerView by lazy {
         recycler_view
     }
@@ -23,7 +27,10 @@ abstract class BaseListActivity : BaseActivity() {
 
     override fun initViews() {
         super.initViews()
-        initRecyclerView()
+        if (mIsDetail.not()) {
+            //不是详情才需要处理列表
+            initRecyclerView()
+        }
     }
 
     open protected fun initRecyclerView() {
