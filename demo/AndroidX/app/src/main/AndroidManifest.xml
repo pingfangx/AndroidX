@@ -36,6 +36,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.androidx.coordinatorlayout.widget.CoordinatorLayoutActivity" />
         <activity android:name=".activity.androidx.core.view.NestedScrollingActivity" />
+        <activity android:name=".activity.com.google.android.material.textfield.TextInputLayoutActivity" />
         <activity android:name=".activity.thirdparty.map.navigation.MapNavigationActivity" />
         <activity android:name=".activity.tool.program.AbiAndMicroarchitectureActivity" />
         <activity android:name=".activity.tool.program.AppListActivity" />

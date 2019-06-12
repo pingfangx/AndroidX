@@ -1,0 +1,7 @@
+<resources>
+    <string name="tips_text_input_layout">
+        对 TextInputLayout 的子项（例如 TextInputEditText）调用 getParent() 可能不会返回 TextInputLayout 本身，而是返回中间 view。\n
+            中间 view 实际是添加了一个 FrameLayout\n
+        endIconMode 可以设置不同的结束图标，有默认实现。实现原理是添加了 CheckableImageButton
+    </string>
+</resources>
