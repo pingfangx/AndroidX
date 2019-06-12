@@ -20,6 +20,10 @@
     </string>
     <string name="tips_map_navigation">基本都是使用 uri 启动 Activity\n各地图有不同的 uri 规则</string>
     <string name="tips_blink_layout">一闪一闪亮晶晶~</string>
+    <string name="tips_linear_layout">measureWithLargestChild 属性，设置为 true 时，所有具有 weight 的子 view 将被视为具有最大 weight 的子 view 的最小尺寸。\n
+具体而言，垂直时，设置后所有子 view 的高度等于最大 weight 的高度，但是要求高度不能为 match_parent\n
+不理解这有什么用啊，那权重设为相等是不是就相等了
+    </string>
     <string name="tips_custom_drawable">自定义 Drawable，绘制圆角矩形，再使用 Path 绘制三角</string>
 
     <string name="dialog_app_list_action_copy_package_name">复制包名</string>
