@@ -49,6 +49,7 @@
         <activity android:name=".activity.view.textview.TextViewSkewActivity" />
         <activity android:name=".activity.view.PreviewViewsActivity" />
         <activity android:name=".common.CommonActivity" />
+        <activity android:name=".common.VirtualActivity" />
     </application>
 
 </manifest>

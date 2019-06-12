@@ -39,7 +39,7 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
         return if (layoutResIdFromIntent != 0) {
             layoutResIdFromIntent
         } else {
-            getDefaultLayoutResId()
+            getLayoutResIdFromResources()
         }
     }
 
@@ -49,7 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
         val title = if (titleFromIntent?.isNotEmpty() == true) {
             titleFromIntent
         } else {
-            getTitleFromRes(this::class.java)
+            getTitleResIdFromResources()
         }
         if (title.isNotEmpty()) {
             setTitle(title)
@@ -78,11 +78,15 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
      * 获取 tips
      */
     protected open fun getTips(): CharSequence {
-        val tipsResId = getIdentifier(prefix = "tips")
+        val tipsResId = getTipsResIdFromResources()
         if (tipsResId != 0) {
             return getText(tipsResId)
         }
         return ""
     }
+
+    protected open fun getLayoutResIdFromResources() = getDefaultLayoutResId()
+    protected open fun getTitleResIdFromResources() = getTitleFromRes(this::class.java)
+    protected open fun getTipsResIdFromResources() = getIdentifier(prefix = "tips")
 
 }

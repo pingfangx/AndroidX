@@ -4,8 +4,10 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.view.View
+import com.pingfangx.demo.androidx.base.extension.INTENT_EXTRA_COMMON
 import com.pingfangx.demo.androidx.base.widget.recycler.BaseRecyclerViewAdapter
 import com.pingfangx.demo.androidx.base.widget.recycler.BaseTextAdapter
+import com.pingfangx.demo.androidx.common.VirtualActivity
 
 /**
  * Activity 列表
@@ -14,9 +16,7 @@ import com.pingfangx.demo.androidx.base.widget.recycler.BaseTextAdapter
  * @date 2018/7/2
  */
 abstract class BaseActivityListActivity : BaseListActivity() {
-    private val mActivityList: MutableList<ActivityItem> by lazy {
-        generateActivityList()
-    }
+    private var mActivityList: MutableList<ActivityItem> = mutableListOf()
 
     /**
      * 解析所有 list
@@ -35,7 +35,11 @@ abstract class BaseActivityListActivity : BaseListActivity() {
         return activityList
     }
 
+    protected open fun initActivityList() {}
+
     override fun createAdapter(): androidx.recyclerview.widget.RecyclerView.Adapter<*> {
+        mActivityList = generateActivityList()
+        initActivityList()
         return object : BaseTextAdapter<ActivityItem>(this, mActivityList) {
             override fun getItemText(t: ActivityItem): String {
                 return t.activityName
@@ -44,7 +48,13 @@ abstract class BaseActivityListActivity : BaseListActivity() {
             override fun onItemClick(view: View, position: Int, t: ActivityItem) {
                 if (t.isParent.not()) {
                     //不是 parent，可以直接打开
-                    startActivity(Intent().setClassName(t.packageName, t.name))
+                    if (t.isVirtual) {
+                        //是虚拟的
+                        startActivity(Intent(this@BaseActivityListActivity, VirtualActivity::class.java)
+                                .putExtra(INTENT_EXTRA_COMMON, t.name))
+                    } else {
+                        startActivity(Intent().setClassName(t.packageName, t.name))
+                    }
                 } else {
                     //是 parent，执行切换
                     t.isOpen = !t.isOpen
@@ -93,13 +103,23 @@ abstract class BaseActivityListActivity : BaseListActivity() {
         }
     }
 
+    protected fun addVirtualActivity(name: String) {
+        val activityPackageNamePre = "$packageName.activity."
+        val activityName = if (name.startsWith(activityPackageNamePre).not()) {
+            activityPackageNamePre + name
+        } else {
+            name
+        }
+        insertItem(mActivityList, ActivityItem(activityName, isParent = false, virtual = true))
+    }
+
     /**
      * 插入 item
      *
      * 有 parent，添加
      * 没有 parent，创建，添加
      */
-    private fun insertItem(activityList: MutableList<ActivityItem>, activityItem: BaseActivityListActivity.ActivityItem): BaseActivityListActivity.ActivityItem {
+    private fun insertItem(activityList: MutableList<ActivityItem>, activityItem: ActivityItem): ActivityItem {
         val parent = findParent(activityList, activityItem)
                 ?: createParent(activityList, activityItem)
         parent.addChild(activityItem)
@@ -110,7 +130,7 @@ abstract class BaseActivityListActivity : BaseListActivity() {
      * 查找 parent
      *
      */
-    private fun findParent(activityList: List<ActivityItem>, activityItem: BaseActivityListActivity.ActivityItem): BaseActivityListActivity.ActivityItem? {
+    private fun findParent(activityList: List<ActivityItem>, activityItem: ActivityItem): ActivityItem? {
         for (item in activityList) {
             if (item.isParent) {
                 if (item.name == activityItem.parentName) {
@@ -133,7 +153,7 @@ abstract class BaseActivityListActivity : BaseListActivity() {
      */
     private fun createParent(activityList: MutableList<ActivityItem>, activityItem: ActivityItem): ActivityItem {
         val activityPackageNamePre = "$packageName.activity"
-        val parent = ActivityItem(activityItem.parentName)
+        val parent = ActivityItem(activityItem.parentName, true)
         if (parent.parentName == activityPackageNamePre) {
             //已到达顶层，添加进数组
             activityList.add(parent)
@@ -150,10 +170,10 @@ abstract class BaseActivityListActivity : BaseListActivity() {
      */
     inner class ActivityItem : ActivityInfo {
         constructor(activityInfo: ActivityInfo) : super(activityInfo)
-        constructor(name: String) {
+        constructor(name: String, isParent: Boolean, virtual: Boolean = false) {
             this.name = name
-            this.isParent = true
-
+            this.isParent = isParent
+            this.isVirtual = virtual
         }
 
         private var _activityName = ""
@@ -178,6 +198,10 @@ abstract class BaseActivityListActivity : BaseListActivity() {
          * 是否是父类
          */
         var isParent = false
+        /**
+         * 是否是虚拟的
+         */
+        var isVirtual = false
         val children: MutableList<ActivityItem> = mutableListOf()
 
         /**
@@ -244,7 +268,7 @@ abstract class BaseActivityListActivity : BaseListActivity() {
                     val child = children[0]
                     if (child.isParent) {
                         //是 parent，继续展开
-                        allChildren.addAll(child.listAllChildren())
+                        allChildren.addAll(child.listUntilChildren())
                     }
                 }
             }

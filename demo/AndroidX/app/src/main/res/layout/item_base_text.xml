@@ -10,5 +10,8 @@
         android:id="@+id/tv_title"
         style="@style/tv.20"
         android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
         tools:text="标题" />
 </RelativeLayout>
