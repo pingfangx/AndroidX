@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.android.graphics.drawable.CustomDrawableActivity" />
+        <activity android:name=".activity.android.view.BlinkLayoutActivity" />
         <activity android:name=".activity.android.widget.ScrollerActivity" />
         <activity android:name=".activity.androidx.coordinatorlayout.widget.AppBarLayoutActivity" />
         <activity
