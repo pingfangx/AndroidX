@@ -1,5 +1,6 @@
 package com.pingfangx.demo.androidx
 
+import com.pingfangx.demo.androidx.activity.com.google.android.material.circularreveal.CircularRevealLinearLayout
 import com.pingfangx.demo.androidx.base.BaseActivityListActivity
 
 /**
@@ -8,6 +9,6 @@ import com.pingfangx.demo.androidx.base.BaseActivityListActivity
 class MainActivity : BaseActivityListActivity() {
     override fun initActivityList() {
         super.initActivityList()
-        addVirtualActivity("com.google.android.material.circularreveal.CircularRevealLinearLayout")
+        addVirtualActivity(CircularRevealLinearLayout::class.java.name)
     }
 }

@@ -4,4 +4,5 @@
             中间 view 实际是添加了一个 FrameLayout\n
         endIconMode 可以设置不同的结束图标，有默认实现。实现原理是添加了 CheckableImageButton
     </string>
+    <string name="tips_circular_reveal_linear_layout">包装，实现 CircularRevealWidget</string>
 </resources>

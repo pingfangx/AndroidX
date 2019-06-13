@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+        android:id="@+id/circular_reveal_widget"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        android:layerType="hardware">
+
+        <TextView
+            android:id="@+id/tv_tips"
+            style="@style/tv.tips"
+            android:background="@color/colorAccent" />
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+    <Button
+        android:id="@+id/btn_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CircularRevealCompat.createCircularReveal"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ObjectAnimator.ofObject"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" ViewAnimationUtils.createCircularReveal"
+        android:textAllCaps="false" />
+</LinearLayout>
