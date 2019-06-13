@@ -5,4 +5,5 @@
         endIconMode 可以设置不同的结束图标，有默认实现。实现原理是添加了 CheckableImageButton
     </string>
     <string name="tips_circular_reveal_linear_layout">包装，实现 CircularRevealWidget</string>
+    <string name="tips_gesture_overlay_view">手势识别，大学的时候看到学长做的文本编辑器，可以用手势关闭，一直不知道怎么实现的，没想到现在终于找到了，唉，过了这么久了啊。</string>
 </resources>

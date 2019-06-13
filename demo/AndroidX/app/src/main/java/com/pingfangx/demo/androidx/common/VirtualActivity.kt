@@ -19,7 +19,7 @@ class VirtualActivity : BaseActivity() {
             ""
         } else {
             activityInitializer = createActivityInitializer(name)
-            name.trim().split(".").last()
+            name.trim().split(".").last().removeSuffix("Demo")
         }
         super.onCreate(savedInstanceState)
     }
