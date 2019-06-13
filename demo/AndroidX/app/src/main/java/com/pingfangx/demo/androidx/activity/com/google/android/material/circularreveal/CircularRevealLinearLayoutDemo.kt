@@ -14,7 +14,7 @@ import com.pingfangx.demo.androidx.base.BaseActivity
  * @author pingfangx
  * @date 2019/6/12
  */
-class CircularRevealLinearLayout : ActivityInitializer {
+class CircularRevealLinearLayoutDemo : ActivityInitializer {
     var view: View? = null
     var circularRevealCompat: CircularRevealWidget? = null
     var cx = 0F
