@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">❤</string>
+    <string name="gesture_please_draw_a_hear">来，画个爱心吧~</string>
+    <string name="gesture_what_is_your_drawn">你画的是个啥？？</string>
+    <string name="gesture_guess_your_drawn">你画的是个%1$s吧~</string>
+    <string name="gesture_love_you">❤爱你❤</string>
+    <string name="gesture_love_you_times">❤爱你%1$d遍❤</string>
+    <string name="gesture_love_you_forever">❤爱你%1$d遍，%2$s爱你❤</string>
+    <string name="gesture_not_quite_like">不太像…</string>
+    <string name="gesture_show_info">%1$s(%2$.2f)</string>
+</resources>
