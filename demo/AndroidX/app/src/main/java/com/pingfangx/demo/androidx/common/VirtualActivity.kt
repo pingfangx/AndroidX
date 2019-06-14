@@ -39,11 +39,15 @@ class VirtualActivity : BaseActivity() {
         return null
     }
 
-    override fun getLayoutResId(): Int {
-        return getIdentifier(activityBaseName.camelToUnderline(), "layout", "activity")
+    override fun getLayoutResIdFromResources(): Int {
+        val layoutResId = activityInitializer?.getLayoutResId()
+        return if (layoutResId != null && layoutResId > 0) {
+            layoutResId
+        } else {
+            getIdentifier(activityBaseName.camelToUnderline(), "layout", "activity")
+        }
     }
 
-    override fun getLayoutResIdFromResources() = getIdentifier(activityBaseName.camelToUnderline(), "layout", "activity")
     override fun getTitleResIdFromResources() = getTitleFromRes(activityBaseName)
     override fun getTipsResIdFromResources() = getIdentifier(activityBaseName.camelToUnderline(), prefix = "tips")
 }

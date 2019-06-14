@@ -85,8 +85,8 @@ abstract class BaseActivity : AppCompatActivity(), ViewLoader {
         return ""
     }
 
-    protected open fun getLayoutResIdFromResources() = getDefaultLayoutResId()
-    protected open fun getTitleResIdFromResources() = getTitleFromRes(this::class.java)
-    protected open fun getTipsResIdFromResources() = getIdentifier(prefix = "tips")
+    protected open fun getLayoutResIdFromResources(): Int = getDefaultLayoutResId()
+    protected open fun getTitleResIdFromResources(): String = getTitleFromRes(this::class.java)
+    protected open fun getTipsResIdFromResources(): Int = getIdentifier(prefix = "tips")
 
 }

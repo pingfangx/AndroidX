@@ -11,4 +11,9 @@ interface ActivityInitializer {
      * 初始化
      */
     fun initActivity(activity: BaseActivity) {}
+
+    /**
+     * 可以指定布局 id
+     */
+    fun getLayoutResId(): Int = 0
 }

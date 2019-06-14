@@ -8,4 +8,8 @@
     <string name="tips_gesture_overlay_view">手势识别，大学的时候看到学长做的文本编辑器，可以用手势关闭，一直不知道怎么实现的，没想到现在终于找到了，唉，过了这么久了啊。</string>
     <string name="tips_view_switcher">点击 view 进行切换，可以在布局中添加，也可以代码添加，也可以设置 factory\n
     动画原理是在 android.widget.ViewAnimator#showOnly(int, boolean) 中执行动画</string>
+    <string name="tips_background_tint">Api 21 Lollipop 添加的\n
+        用于 ImageView 的 tint 和 tintMode，也可以用于 backgroundTint 及 backgroundTintMode\n
+        代码设置是 setImageTintList 和 setImageTintMode\n
+        mode 可以参考 Xfermode</string>
 </resources>
