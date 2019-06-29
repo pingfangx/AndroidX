@@ -6,11 +6,12 @@ android {
 
 
     defaultConfig {
+        //啊呀，包名写错了，应该是 pingfangx
         applicationId "com.pinfangx.demo.love"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 10001
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

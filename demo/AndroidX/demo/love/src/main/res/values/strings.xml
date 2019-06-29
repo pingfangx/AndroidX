@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">❤</string>
-    <string name="gesture_please_draw_a_hear">来，画个爱心吧~</string>
+    <string name="gesture_heart_gesture_name">爱心</string>
+    <string name="gesture_please_draw_a_heart">来，画个爱心吧~</string>
     <string name="gesture_what_is_your_drawn">你画的是个啥？？</string>
     <string name="gesture_guess_your_drawn">你画的是个%1$s吧~</string>
     <string name="gesture_love_you">❤爱你❤</string>
@@ -8,4 +9,15 @@
     <string name="gesture_love_you_forever">❤爱你%1$d遍，%2$s爱你❤</string>
     <string name="gesture_not_quite_like">不太像…</string>
     <string name="gesture_show_info">%1$s(%2$.2f)</string>
+
+    <string name="gesture_draw_your_heart">绘制自己的爱心</string>
+    <string name="gesture_toggle_mode">进入%1$s</string>
+    <string name="gesture_mode_draw">绘制模式</string>
+    <string name="gesture_mode_recognize">识别模式</string>
+
+    <string name="gesture_toast_draw_finish">手势绘制完成</string>
+    <string name="gesture_toast_save_gesture_success">保存手势 [%1$s] 成功</string>
+    <string name="gesture_dialog_save_gesture_message">确认保存手势吗？</string>
+    <string name="gesture_dialog_save_gesture_save">保存</string>
+    <string name="gesture_dialog_save_gesture_cancel">取消</string>
 </resources>
