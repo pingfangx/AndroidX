@@ -41,9 +41,7 @@ abstract class BaseActivityListActivity : BaseListActivity() {
         mActivityList = generateActivityList()
         initActivityList()
         return object : BaseTextAdapter<ActivityItem>(this, mActivityList) {
-            override fun getItemText(t: ActivityItem): String {
-                return t.activityName
-            }
+            override fun getItemText(t: ActivityItem): String = t.activityName
         }.setOnItemClickListener(object : BaseRecyclerViewAdapter.OnItemClickListener<ActivityItem> {
             override fun onItemClick(view: View, position: Int, t: ActivityItem) {
                 if (t.isParent.not()) {
@@ -70,29 +68,33 @@ abstract class BaseActivityListActivity : BaseListActivity() {
     private fun toggle(position: Int, activityItem: ActivityItem, open: Boolean) {
         if (open) {
             //添加
+            //依次展开只有一个 child 的结点，直到 child 或不只一个 child
             val allChildren = activityItem.listUntilChildren()
             mActivityList.addAll(position + 1, allChildren)
             mAdapter.notifyItemRangeInserted(position + 1, allChildren.size)
             //展开到第一个 child
-            var firstChildIndex = 0
+            var firstChildIndex = -1
             for ((i, child) in allChildren.withIndex()) {
                 if (child.isParent.not()) {
-                    firstChildIndex = i + 1
+                    firstChildIndex = i
                     break
                 }
             }
-            if (firstChildIndex > 0) {
-                //如果有 child 则将 parent 标记为展开
-                for ((i, child) in allChildren.withIndex()) {
-                    if (i >= firstChildIndex) {
-                        break
-                    }
-                    if (child.isParent) {
+            if (firstChildIndex == -1) {
+                //如果没有 child，说明都是 parent 取到最后一个
+                firstChildIndex = allChildren.size - 1
+            }
+            //将 parent 都标记为展开
+            for ((i, child) in allChildren.withIndex()) {
+                if (i > firstChildIndex) {
+                    break
+                }
+                if (child.isParent) {
+                    val childrenOfChild = child.listAllChildren()
+                    if (childrenOfChild.contains(allChildren[firstChildIndex])) {
                         child.isOpen = true
                     }
                 }
-                //如果为 0 表示没有 child 不需要滚动
-                mRecyclerView.scrollToPosition(position + firstChildIndex)
             }
         } else {
             //移除，因为关闭时可能有多个 child 展示，所以使用 listAllChildren
@@ -100,6 +102,11 @@ abstract class BaseActivityListActivity : BaseListActivity() {
             val size = mActivityList.size
             mActivityList.removeAll(allChildren)
             mAdapter.notifyItemRangeRemoved(position + 1, size - mActivityList.size)
+            for (child in allChildren) {
+                if (child.isParent) {
+                    child.isOpen = false
+                }
+            }
         }
     }
 
@@ -163,7 +170,6 @@ abstract class BaseActivityListActivity : BaseListActivity() {
         }
         return parent
     }
-
 
     /**
      * 继承 ActivityInfo 补充其他内容
