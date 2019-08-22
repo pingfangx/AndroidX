@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AccessibilityDemo</string>
+    <string name="accessibility_service_label">AndroidX 中的 Accessibility 测试服务</string>
+    <string name="accessibility_service_description">AndroidX 中的 Accessibility 测试服务</string>
+</resources>
