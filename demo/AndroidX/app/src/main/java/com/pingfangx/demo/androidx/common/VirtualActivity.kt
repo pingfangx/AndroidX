@@ -1,6 +1,7 @@
 package com.pingfangx.demo.androidx.common
 
 import android.os.Bundle
+import com.pingfangx.demo.androidx.R
 import com.pingfangx.demo.androidx.base.*
 import com.pingfangx.demo.androidx.base.extension.INTENT_EXTRA_COMMON
 
@@ -44,7 +45,12 @@ class VirtualActivity : BaseActivity() {
         return if (layoutResId != null && layoutResId > 0) {
             layoutResId
         } else {
-            getIdentifier(activityBaseName.camelToUnderline(), "layout", "activity")
+            val activityLayoutResId = getIdentifier(activityBaseName.camelToUnderline(), "layout", "activity")
+            if (activityLayoutResId != 0) {
+                activityLayoutResId
+            } else {
+                R.layout.activity_base_tips
+            }
         }
     }
 
