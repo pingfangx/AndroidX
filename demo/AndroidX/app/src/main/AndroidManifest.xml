@@ -47,6 +47,9 @@
         <activity
             android:name=".activity.android.app.lifecycle.SingleInstanceActivity"
             android:launchMode="singleInstance" />
+
+        <activity android:name=".activity.android.content.IntentMaxSizeTestActivity" />
+
         <activity android:name=".activity.android.graphics.drawable.CustomDrawableActivity" />
         <activity android:name=".activity.android.view.BlinkLayoutActivity" />
         <activity android:name=".activity.android.widget.LinearLayoutActivity" />
