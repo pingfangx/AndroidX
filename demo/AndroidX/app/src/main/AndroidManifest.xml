@@ -29,6 +29,24 @@
                     android:scheme="xx" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.android.app.lifecycle.AActvity" />
+        <activity android:name=".activity.android.app.lifecycle.BActvity" />
+        <activity
+            android:name=".activity.android.app.lifecycle.StandardActivity"
+            android:launchMode="standard" />
+        <activity
+            android:name=".activity.android.app.lifecycle.SingleTopActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.android.app.lifecycle.SingleTaskActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.android.app.lifecycle.SingleTaskWithAffinityActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.pingfangx.demo.androidx.lifecycle" />
+        <activity
+            android:name=".activity.android.app.lifecycle.SingleInstanceActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".activity.android.graphics.drawable.CustomDrawableActivity" />
         <activity android:name=".activity.android.view.BlinkLayoutActivity" />
         <activity android:name=".activity.android.widget.LinearLayoutActivity" />
