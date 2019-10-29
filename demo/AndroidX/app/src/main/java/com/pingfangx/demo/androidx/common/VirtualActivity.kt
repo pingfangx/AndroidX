@@ -1,5 +1,6 @@
 package com.pingfangx.demo.androidx.common
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.pingfangx.demo.androidx.R
@@ -13,6 +14,10 @@ import com.pingfangx.demo.androidx.base.extension.INTENT_EXTRA_COMMON
  * @date 2019/6/12
  */
 class VirtualActivity : BaseActivity() {
+    companion object {
+        fun createInent(context: Context, name: String) = Intent(context, VirtualActivity::class.java).putExtra(INTENT_EXTRA_COMMON, name)
+    }
+
     var activityBaseName = ""
     var activityInitializer: ActivityInitializer? = null
     var activityLifecycle: ActivityLifecycle? = null

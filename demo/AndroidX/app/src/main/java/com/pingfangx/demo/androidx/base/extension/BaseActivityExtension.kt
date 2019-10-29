@@ -16,6 +16,7 @@ import com.pingfangx.demo.androidx.base.BaseActivity
 
 fun BaseActivity.addButton(text: CharSequence, listener: View.OnClickListener?) {
     val btn = Button(this)
+    btn.isAllCaps = false
     btn.text = text
     btn.setOnClickListener(listener)
 
