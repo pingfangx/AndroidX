@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+    <!--同时用于服务和广播接收器-->
+    <permission android:name="com.pingfangx.demo.androidx.permission" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -77,6 +80,7 @@
         <activity android:name=".common.CommonActivity" />
         <activity android:name=".common.VirtualActivity" />
 
+        <!--以下为服务-->
         <service
             android:name=".activity.android.app.service.AnotherProcessService"
             android:process=":another" />
@@ -92,6 +96,11 @@
         <service
             android:name=".activity.android.app.service.MessengerService"
             android:process=":another" />
+        <service
+            android:name=".activity.android.app.service.DemoAidlService"
+            android:exported="true"
+            android:permission="com.pingfangx.demo.androidx.permission" />
+
     </application>
 
 </manifest>
