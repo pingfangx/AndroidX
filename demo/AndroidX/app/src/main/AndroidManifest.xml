@@ -29,23 +29,24 @@
                     android:scheme="xx" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.android.app.lifecycle.AActvity" />
-        <activity android:name=".activity.android.app.lifecycle.BActvity" />
+        <activity android:name=".activity.android.app.activity.AActvity" />
+        <activity android:name=".activity.android.app.activity.BActvity" />
+        <activity android:name=".activity.android.app.activity.FragmentLifecycleActivity" />
         <activity
-            android:name=".activity.android.app.lifecycle.StandardActivity"
+            android:name=".activity.android.app.activity.StandardActivity"
             android:launchMode="standard" />
         <activity
-            android:name=".activity.android.app.lifecycle.SingleTopActivity"
+            android:name=".activity.android.app.activity.SingleTopActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.android.app.lifecycle.SingleTaskActivity"
+            android:name=".activity.android.app.activity.SingleTaskActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".activity.android.app.lifecycle.SingleTaskWithAffinityActivity"
+            android:name=".activity.android.app.activity.SingleTaskWithAffinityActivity"
             android:launchMode="singleTask"
             android:taskAffinity="com.pingfangx.demo.androidx.lifecycle" />
         <activity
-            android:name=".activity.android.app.lifecycle.SingleInstanceActivity"
+            android:name=".activity.android.app.activity.SingleInstanceActivity"
             android:launchMode="singleInstance" />
 
         <activity android:name=".activity.android.content.IntentMaxSizeTestActivity" />

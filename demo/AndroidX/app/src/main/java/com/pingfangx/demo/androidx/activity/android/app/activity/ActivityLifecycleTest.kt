@@ -1,4 +1,4 @@
-package com.pingfangx.demo.androidx.activity.android.app.lifecycle
+package com.pingfangx.demo.androidx.activity.android.app.activity
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import com.pingfangx.demo.androidx.R
+import com.pingfangx.demo.androidx.activity.androidx.fragment.app.LifecycleFragment
 import com.pingfangx.demo.androidx.base.BaseTipsActivity
 import com.pingfangx.demo.androidx.base.xxlog
 import org.jetbrains.anko.startActivity
@@ -139,3 +140,12 @@ class SingleTopActivity : BaseLifecycleActivity()
 class SingleTaskActivity : BaseLifecycleActivity()
 class SingleTaskWithAffinityActivity : BaseLifecycleActivity()
 class SingleInstanceActivity : BaseLifecycleActivity()
+class FragmentLifecycleActivity : BaseLifecycleActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val supportFragmentManager = supportFragmentManager
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.ll_root, LifecycleFragment())
+        transaction.commit()
+    }
+}
