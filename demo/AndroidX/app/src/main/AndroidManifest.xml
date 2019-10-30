@@ -8,6 +8,7 @@
 
     <!--同时用于服务和广播接收器-->
     <permission android:name="com.pingfangx.demo.androidx.permission" />
+    <uses-permission android:name="com.pingfangx.demo.androidx.permission" />
 
     <application
         android:allowBackup="false"
@@ -99,8 +100,24 @@
         <service
             android:name=".activity.android.app.service.DemoAidlService"
             android:exported="true"
-            android:permission="com.pingfangx.demo.androidx.permission" />
+            android:permission="@string/com_pingfangx_demo_androidx_permission" />
 
+        <!--以下是广播-->
+        <receiver
+            android:name=".activity.android.content.receiver.ManifestDeclaredReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.pingfangx.demo.androidx.activity.android.content.receiver.ManifestDeclaredReceiver" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".activity.android.content.receiver.ManifestDeclaredWithPermissionReceiver"
+            android:exported="true"
+            android:permission="@string/com_pingfangx_demo_androidx_permission">
+            <intent-filter>
+                <action android:name="com.pingfangx.demo.androidx.activity.android.content.receiver.ManifestDeclaredWithPermissionReceiver" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

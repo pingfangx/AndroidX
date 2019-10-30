@@ -9,6 +9,7 @@ import android.view.View
 import com.pingfangx.demo.androidx.base.ActivityLifecycle
 import com.pingfangx.demo.androidx.base.BaseActivity
 import com.pingfangx.demo.androidx.base.extension.addButton
+import com.pingfangx.demo.androidx.base.extension.printCurrentThreadInfo
 import com.pingfangx.demo.androidx.base.xxlog
 import org.jetbrains.anko.toast
 import kotlin.random.Random
@@ -32,7 +33,7 @@ class MessengerService : LifecycleTestService() {
             val text = "服务接收到消息" + msg.what
             applicationContext.toast(text)
             text.xxlog()
-            printCurrentThreadInfo(applicationContext)
+            applicationContext.printCurrentThreadInfo()
 
             msg.replyTo?.send(Message.obtain(null, msg.what shl 1))
         }
@@ -56,7 +57,7 @@ class MessengerServiceDemo : ActivityLifecycle {
             val text = "客户端收到回复" + msg.what
             applicationContext.toast(text)
             text.xxlog()
-            printCurrentThreadInfo(applicationContext)
+            applicationContext.printCurrentThreadInfo()
         }
     }
 

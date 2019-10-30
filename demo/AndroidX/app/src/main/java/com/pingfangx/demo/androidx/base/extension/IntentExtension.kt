@@ -1,5 +1,7 @@
 package com.pingfangx.demo.androidx.base.extension
 
+import android.content.Intent
+
 /**
  * Intent 扩展
  *
@@ -21,3 +23,5 @@ const val INTENT_EXTRA_LAYOUT = "layout"
  * 指定标题
  */
 const val INTENT_EXTRA_TITLE = "title"
+
+fun Intent?.hasTrueExtra(name: String) = this?.getBooleanExtra(name, false) == true

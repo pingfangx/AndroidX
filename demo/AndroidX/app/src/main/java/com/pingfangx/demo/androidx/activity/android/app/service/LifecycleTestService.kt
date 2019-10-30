@@ -2,7 +2,6 @@ package com.pingfangx.demo.androidx.activity.android.app.service
 
 import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
@@ -13,7 +12,7 @@ import com.pingfangx.demo.androidx.activity.android.app.notification.Notificatio
 import com.pingfangx.demo.androidx.base.ActivityInitializer
 import com.pingfangx.demo.androidx.base.BaseActivity
 import com.pingfangx.demo.androidx.base.extension.addButton
-import com.pingfangx.demo.androidx.base.extension.getProcessName
+import com.pingfangx.demo.androidx.base.extension.printCurrentThreadInfo
 import com.pingfangx.demo.androidx.base.extension.simpleClassName
 import com.pingfangx.demo.androidx.base.xxlog
 import com.pingfangx.demo.androidx.common.VirtualActivity
@@ -42,7 +41,7 @@ open class LifecycleTestService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         "${simpleClassName()} onStartCommand".xxlog()
         "intent 为 $intent".xxlog()
-        printCurrentThreadInfo(this)
+        printCurrentThreadInfo()
         toast("onStartCommand")
 
         checkAndStartForeground(intent)
@@ -104,15 +103,11 @@ open class LifecycleTestService : Service() {
  */
 class AnotherProcessService : LifecycleTestService()
 
-fun printCurrentThreadInfo(context: Context) {
-    "当前进程 ${context.getProcessName()},当前线程 tid=${Thread.currentThread().id}, ${Thread.currentThread()}".xxlog()
-}
-
 class ServiceLifecycleDemo : ActivityInitializer {
     override fun initActivity(activity: BaseActivity) {
         super.initActivity(activity)
         activity.addButton("startService", View.OnClickListener {
-            printCurrentThreadInfo(activity)
+            activity.printCurrentThreadInfo()
             activity.startService(Intent(activity, LifecycleTestService::class.java))
         })
         activity.addButton("stopService", View.OnClickListener {
@@ -135,7 +130,7 @@ class ServiceLifecycleDemo : ActivityInitializer {
         })
 
         activity.addButton("起动另一进程的服务", View.OnClickListener {
-            printCurrentThreadInfo(activity)
+            activity.printCurrentThreadInfo()
             activity.startService(Intent(activity, AnotherProcessService::class.java))
         })
         activity.addButton("隐式 intent 启动", View.OnClickListener {
