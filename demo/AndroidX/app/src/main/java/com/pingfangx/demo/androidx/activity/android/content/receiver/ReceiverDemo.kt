@@ -1,14 +1,15 @@
 package com.pingfangx.demo.androidx.activity.android.content.receiver
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.*
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.pingfangx.demo.androidx.R
+import com.pingfangx.demo.androidx.activity.android.app.job.DemoJobService
 import com.pingfangx.demo.androidx.base.ActivityLifecycle
 import com.pingfangx.demo.androidx.base.BaseActivity
 import com.pingfangx.demo.androidx.base.extension.addButton
@@ -43,7 +44,9 @@ abstract class LifecycleReceiver : BroadcastReceiver() {
         context?.printCurrentThreadInfo()
         checkAndTimeOut(intent)
         checkAndGoAsnyc(intent)
-        checkAndJobScheduler(intent)
+        if (context != null) {
+            checkAndJobScheduler(context, intent)
+        }
     }
 
     private fun checkAndTimeOut(intent: Intent?) {
@@ -87,9 +90,18 @@ abstract class LifecycleReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun checkAndJobScheduler(intent: Intent?) {
+    private fun checkAndJobScheduler(context: Context, intent: Intent?) {
         if (!intent.hasTrueExtra(EXTRA_JOB_SCHEDULER)) {
             return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val jobInfo: JobInfo = JobInfo.Builder(1, ComponentName(context, DemoJobService::class.java))
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setRequiresCharging(true)
+                    .build()
+            val scheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+            scheduler.schedule(jobInfo)
+            "执行schedule".xxlog()
         }
     }
 }
