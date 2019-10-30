@@ -4,11 +4,20 @@
 
     <!--用于浮窗 FloatWindowDemo-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--用于启动前台服务-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--用于写入拍摄的照片，仅当写入的不是 getExternalFilesDir 获取的时需要-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!--同时用于服务和广播接收器-->
     <permission android:name="com.pingfangx.demo.androidx.permission" />
+    <!--用于服务、广播接收器等-->
     <uses-permission android:name="com.pingfangx.demo.androidx.permission" />
+
+    <!--用于拍照-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="false"
@@ -121,6 +130,18 @@
                 <action android:name="com.pingfangx.demo.androidx.activity.android.content.receiver.ManifestDeclaredWithPermissionReceiver" />
             </intent-filter>
         </receiver>
+
+        <!--以下是 provider-->
+        <!--用于读取文件-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.pingfangx.demo.androidx.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

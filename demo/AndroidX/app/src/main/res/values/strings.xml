@@ -33,4 +33,5 @@
         <item>@string/dialog_app_list_action_copy_signature</item>
     </string-array>
     <string name="com_pingfangx_demo_androidx_permission">com.pingfangx.demo.androidx.permission</string>
+    <string name="com_pingfangx_demo_androidx_fileprovider">com.pingfangx.demo.androidx.fileprovider</string>
 </resources>
