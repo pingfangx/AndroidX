@@ -11,9 +11,7 @@ import com.pingfangx.demo.androidx.R
 import com.pingfangx.demo.androidx.activity.android.app.notification.NotificationDemo
 import com.pingfangx.demo.androidx.base.ActivityInitializer
 import com.pingfangx.demo.androidx.base.BaseActivity
-import com.pingfangx.demo.androidx.base.extension.addButton
-import com.pingfangx.demo.androidx.base.extension.printCurrentThreadInfo
-import com.pingfangx.demo.androidx.base.extension.simpleClassName
+import com.pingfangx.demo.androidx.base.extension.*
 import com.pingfangx.demo.androidx.base.xxlog
 import com.pingfangx.demo.androidx.common.VirtualActivity
 import org.jetbrains.anko.toast
@@ -26,8 +24,9 @@ import org.jetbrains.anko.toast
  */
 open class LifecycleTestService : Service() {
     companion object {
-        const val EXTRA_AUTO_STOP = "auto_stop"
-        const val EXTRA_FOREGROUND = "foreground"
+        const val EXTRA_AUTO_STOP = "EXTRA_AUTO_STOP"
+        const val EXTRA_FOREGROUND = "EXTRA_FOREGROUND"
+        const val EXTRA_TIME_OUT = "EXTRA_TIME_OUT"
 
         const val CHANNEL_ID = "前台服务"
         const val NOTIFICATION_ID = 1
@@ -46,6 +45,7 @@ open class LifecycleTestService : Service() {
 
         checkAndStartForeground(intent)
         checkAndAutoStop(intent)
+        checkAndTimeOut(intent)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -94,6 +94,12 @@ open class LifecycleTestService : Service() {
                 Thread.sleep(3000)
                 stopSelf()
             }).start()
+        }
+    }
+
+    private fun checkAndTimeOut(intent: Intent?) {
+        if (intent.hasTrueExtra(EXTRA_TIME_OUT)) {
+            threadSleep(60 + 10)
         }
     }
 }

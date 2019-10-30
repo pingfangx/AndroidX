@@ -12,13 +12,9 @@ import com.pingfangx.demo.androidx.R
 import com.pingfangx.demo.androidx.activity.android.app.job.DemoJobService
 import com.pingfangx.demo.androidx.base.ActivityLifecycle
 import com.pingfangx.demo.androidx.base.BaseActivity
-import com.pingfangx.demo.androidx.base.extension.addButton
-import com.pingfangx.demo.androidx.base.extension.hasTrueExtra
-import com.pingfangx.demo.androidx.base.extension.printCurrentThreadInfo
-import com.pingfangx.demo.androidx.base.extension.simpleClassName
+import com.pingfangx.demo.androidx.base.extension.*
 import com.pingfangx.demo.androidx.base.xxlog
 import org.jetbrains.anko.toast
-import java.util.concurrent.TimeUnit
 
 /**
  * 广播接收器
@@ -50,12 +46,8 @@ abstract class LifecycleReceiver : BroadcastReceiver() {
     }
 
     private fun checkAndTimeOut(intent: Intent?) {
-        if (!intent.hasTrueExtra(EXTRA_TIME_OUT)) {
-            return
-        }
-        for (i in 1..11) {
-            i.toString().xxlog()
-            TimeUnit.SECONDS.sleep(1)
+        if (intent.hasTrueExtra(EXTRA_TIME_OUT)) {
+            threadSleep(10 + 10)
         }
     }
 
@@ -77,10 +69,7 @@ abstract class LifecycleReceiver : BroadcastReceiver() {
             private val intent: Intent?) : AsyncTask<String, Int, String>() {
 
         override fun doInBackground(vararg params: String?): String {
-            for (i in 1..11) {
-                i.toString().xxlog()
-                TimeUnit.SECONDS.sleep(1)
-            }
+            threadSleep(10 + 10)
             return intent?.action ?: ""
         }
 
