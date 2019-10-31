@@ -1,0 +1,30 @@
+@startuml
+--> ViewRootImpl:requestLayout
+ViewRootImpl -> ViewRootImpl:scheduleTraversals\n postCallback
+--> TraversalRunnable:run
+TraversalRunnable -> ViewRootImpl:doTraversal
+ViewRootImpl -> ViewRootImpl:performTraversals
+
+ViewRootImpl -> ViewRootImpl:performMeasure
+ViewRootImpl -> View:measure
+View -> DecorView:onMeasure
+DecorView -> ViewGroup:measureChildWithMargins
+ViewGroup -> View:measure
+View -> View:onMeasure
+
+
+ViewRootImpl -> ViewRootImpl:performLayout
+ViewRootImpl -> DecorView:onLayout
+DecorView -> ViewGroup:onLayout
+ViewGroup -> View:layout
+
+ViewRootImpl -> ViewRootImpl:performDraw
+ViewRootImpl -> View:draw
+View -> DecorView:draw
+DecorView -> View:draw
+View -> ViewGroup:dispatchDraw
+ViewGroup -> ViewGroup:drawChild
+ViewGroup -> View:draw
+View -> View:onDraw
+
+@enduml

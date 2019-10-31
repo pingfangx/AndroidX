@@ -1,0 +1,55 @@
+@startuml
+autonumber
+
+== PhoneWindow 创建过程==
+--> ActivityThread:handleLaunchActivity
+ActivityThread -> ActivityThread:performLaunchActivity
+ActivityThread --> Activity:attach
+Activity -> PhoneWindow:new
+PhoneWindow -> Window:super
+PhoneWindow -> LayoutInflater:from(context)
+
+Activity -> Window:setCallback
+Activity -> Window:setSoftInputMode
+
+Activity -> Window:setWindowManager
+
+Window -> WindowManagerImpl:createLocalWindowManager
+
+==setContentView==
+ActivityThread -> Activity:onCreate
+Activity --> Activity:setContentView
+Activity -> PhoneWindow:setContentView
+PhoneWindow -> PhoneWindow:installDecor
+PhoneWindow -> PhoneWindow:generateDecor
+PhoneWindow -> DecorView:new
+
+PhoneWindow -> PhoneWindow:generateLayout()
+note left
+contentParent =
+findViewById(ID_ANDROID_CONTENT);
+end note
+
+
+
+== View 加载过程==
+PhoneWindow -> LayoutInflater:inflate
+note right
+rInflateChildren
+inflate
+createViewFromTag
+createView
+constructor.newInstance(args);
+end note
+
+LayoutInflater -> ViewGroup:addView
+
+--> ActivityThread:handleResumeActivity
+ActivityThread -> WindowManagerImpl:addView
+
+WindowManagerImpl -> ViewRootImpl:new
+WindowManagerImpl -> ViewRootImpl:setView
+ViewRootImpl -> ViewRootImpl:requestLayout，首次请求
+
+ViewRootImpl ->mWindowSession: addToDisplay
+@enduml

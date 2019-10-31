@@ -1,0 +1,26 @@
+@startuml
+autonumber
+--> ActivityThread:performLaunchActivity
+
+ActivityThread -> ContextImpl:createActivityContext
+
+ActivityThread -> Instrumentation:newActivity
+
+Instrumentation -> Activity:newInstance();
+
+ActivityThread -> Application:r.packageInfo.makeApplication
+
+ActivityThread -> ContextImpl:appContext.setOuterContext(activity);
+
+ActivityThread -> Activity:attach(appContext,...)
+Activity -> ContextThemeWrapper:attachBaseContext
+
+ContextThemeWrapper -> ContextWrapper:attachBaseContext
+
+ContextThemeWrapper -> Context:super()
+
+ActivityThread -> Instrumentation:callActivityOnCreate
+
+Instrumentation -> Activity:onCreate
+
+@enduml
