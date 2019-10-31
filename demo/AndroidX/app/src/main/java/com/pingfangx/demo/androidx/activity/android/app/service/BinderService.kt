@@ -84,7 +84,9 @@ class BinderServiceDemo : ActivityLifecycle {
 
     override fun onDestroy(activity: BaseActivity) {
         super.onDestroy(activity)
-        activity.unbindService(connection)
-        mBound = false
+        if (mBound) {
+            activity.unbindService(connection)
+            mBound = false
+        }
     }
 }

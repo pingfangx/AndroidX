@@ -102,6 +102,7 @@
                 <action android:name="com.pingfangx.demo.androidx.activity.android.app.service.LifecycleTestService" />
             </intent-filter>
         </service>
+        <service android:name=".activity.android.app.service.DemoIntentService" />
         <service android:name=".activity.android.app.service.BinderService" />
         <service
             android:name=".activity.android.app.service.MessengerService"

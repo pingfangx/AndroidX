@@ -11,6 +11,10 @@ import java.util.concurrent.TimeUnit
  * @date 2019/10/30
  */
 
+fun printCurrentThreadInfo() {
+    "当前线程 tid=${Thread.currentThread().id}, ${Thread.currentThread()}".xxlog()
+}
+
 fun Context.printCurrentThreadInfo() {
     "当前进程 ${this.getProcessName()},当前线程 tid=${Thread.currentThread().id}, ${Thread.currentThread()}".xxlog()
 }

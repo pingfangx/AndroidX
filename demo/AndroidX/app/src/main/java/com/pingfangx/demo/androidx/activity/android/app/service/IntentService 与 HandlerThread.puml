@@ -1,0 +1,43 @@
+@startuml
+--> IntentService:onCreate()
+IntentService -> HandlerThread
+
+IntentService -> HandlerThread:thread.start();
+
+HandlerThread -> HandlerThread:run()
+HandlerThread -> Looper:Looper.prepare();
+Looper -> Looper:new Looper(quitAllowed)
+note right
+因为在子线程中调用
+所以 Looper 是属于子线程的
+end note
+
+create MessageQueue
+Looper -> MessageQueue:new
+
+
+HandlerThread -> Looper:mLooper = Looper.myLooper();
+Looper --> HandlerThread
+HandlerThread -> Looper:Looper.loop();
+
+IntentService -> HandlerThread:thread.getLooper();
+HandlerThread -> Looper
+Looper --> IntentService:mLooper
+
+create ServiceHandler
+IntentService -> ServiceHandler:new ServiceHandler(mServiceLooper);
+note right
+使用 Looper 创建了 ServiceHandler
+end note
+
+--> IntentService:onStart()
+IntentService -> ServiceHandler:mServiceHandler.sendMessage(msg);
+ServiceHandler -> MessageQueue:queue.enqueueMessage
+
+MessageQueue -> Looper
+Looper -> ServiceHandler:msg.target.dispatchMessage(msg);
+ServiceHandler -> ServiceHandler:handleMessage
+
+ServiceHandler -> IntentService:onHandleIntent
+
+@enduml

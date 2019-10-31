@@ -1,0 +1,52 @@
+@startuml
+AsyncTask -> SerialExecutor
+--> AsyncTask:new
+
+create InternalHandler
+AsyncTask -> InternalHandler:getMainHandler()
+note right
+mHandler = callbackLooper == null || callbackLooper == Looper.getMainLooper()
+            ? getMainHandler()
+            : new Handler(callbackLooper);
+end note
+
+create WorkerRunnable
+AsyncTask -> WorkerRunnable:mWorker = new WorkerRunnable<Params, Result>()
+
+create FutureTask
+AsyncTask -> FutureTask:mFuture = new FutureTask<Result>(mWorker)
+
+--> AsyncTask:execute
+AsyncTask -> AsyncTask:executeOnExecutor
+
+AsyncTask -> WorkerRunnable:mWorker.mParams = params;
+
+AsyncTask -> AsyncTask : onPreExecute();
+
+AsyncTask -> SerialExecutor:exec.execute(mFuture);
+
+==进入子线程==
+
+SerialExecutor -> FutureTask :r.run();
+
+FutureTask -> WorkerRunnable:result = c.call();
+
+WorkerRunnable -> AsyncTask:result = doInBackground(mParams);
+AsyncTask --> WorkerRunnable
+WorkerRunnable --> FutureTask
+
+FutureTask -> FutureTask :done()
+
+FutureTask -> AsyncTask:postResult(Result result)
+
+AsyncTask -> InternalHandler:sendMessage
+
+==回到主线程==
+--> InternalHandler:handleMessage
+InternalHandler --> AsyncTask:result.mTask.onProgressUpdate(result.mData);
+InternalHandler --> AsyncTask:result.mTask.finish(result.mData[0]);
+
+AsyncTask -> AsyncTask:onPostExecute
+
+
+@enduml

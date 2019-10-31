@@ -1,0 +1,64 @@
+@startuml
+-->ActivityThread:main()
+ActivityThread -> Looper:Looper.prepareMainLooper()
+
+Looper -> Looper:prepare():
+
+Looper -> Looper:new Looper(quitAllowed)
+note right
+sThreadLocal.set(new Looper(quitAllowed));
+end note
+
+Looper -> MessageQueue:mQueue = new MessageQueue(quitAllowed);
+MessageQueue --> Looper
+participant Message
+
+
+Looper -> Looper:sMainLooper = myLooper();
+
+ActivityThread ->ActivityThread:new ActivityThread()
+
+ActivityThread -> H:final H mH = new H();
+H -> Handler
+Handler -> Looper:mLooper = Looper.myLooper();//或者通过构造函数指定 Looper
+Looper --> Handler
+Handler --> MessageQueue:mQueue = mLooper.mQueue;
+MessageQueue -> Handler
+
+Handler --> ActivityThread
+
+ActivityThread -> Looper:Looper.loop();
+Looper -> MessageQueue:Message msg = queue.next();
+
+MessageQueue -> Message:
+Message --> Looper
+
+==发送==
+Handler -> Handler: sendMessage()
+note right
+sendMessage()
+sendMessageDelayed()
+sendMessageAtTime()
+enqueueMessage()
+end note
+
+Handler -> Handler: enqueueMessage()
+note right
+    msg.target = this;
+end note
+
+Handler -> MessageQueue:queue.enqueueMessage()
+MessageQueue --> Looper
+
+==处理==
+
+Looper -> Handler:msg.target.dispatchMessage(msg);
+Handler -> Handler:if (msg.callback != null) \n handleCallback(msg);
+
+Handler -> Runnable:message.callback.run();
+
+Handler -> Handler:else: handleMessage(msg);
+
+
+
+@enduml
