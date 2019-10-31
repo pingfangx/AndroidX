@@ -1,5 +1,8 @@
 include ':app'
-include ':demo:accessibility'
-include ':demo:aidldemo'
-include ':demo:love'
-include ':third:eventbusdemo'
+['demo', 'third'].each { dir ->
+    file(dir).eachDir { subDir ->
+        def name = subDir.name
+        include name
+        project(":$name").projectDir = subDir
+    }
+}

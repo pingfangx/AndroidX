@@ -34,12 +34,11 @@ fun getSupportedAbi(): String {
  */
 fun Context.copyToClipboard(text: CharSequence, toast: Boolean = true) {
     val clipboardManager: ClipboardManager = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboardManager.primaryClip = ClipData.newPlainText(text, text)
+    clipboardManager.setPrimaryClip(ClipData.newPlainText(text, text))
     if (toast) {
         this.toast("已复制\n$text")
     }
 }
-
 
 fun getAppSignature(context: Context, packageName: String): String {
     val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

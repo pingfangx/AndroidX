@@ -38,7 +38,9 @@ class CircularRevealLinearLayoutDemo : ActivityInitializer {
                     CircularRevealWidget.CircularRevealEvaluator.CIRCULAR_REVEAL,
                     CircularRevealWidget.RevealInfo(cx, cy, startRadius),
                     CircularRevealWidget.RevealInfo(cx, cy, endRadius))
-            animator.addListener(CircularRevealCompat.createCircularRevealListener(circularRevealCompat))
+            circularRevealCompat?.let {
+                animator.addListener(CircularRevealCompat.createCircularRevealListener(circularRevealCompat))
+            }
             animator.duration = 2000
             animator.start()
         }
