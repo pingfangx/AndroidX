@@ -1,0 +1,54 @@
+@startuml
+--> ActivityThread:main
+ActivityThread -> Looper:loop
+Looper -> MessageQueue:next
+MessageQueue -> MessageQueue:nativePollOnce
+MessageQueue --> InputEventReceiver:dispatchInputEvent
+note left
+不知道怎么就分发过来了
+end note
+
+InputEventReceiver -> ViewRootImpl:enqueueInputEvent
+ViewRootImpl -> ViewRootImpl
+note right
+doProcessInputEvents
+deliverInputEvent
+end note
+
+ViewRootImpl -> "ViewRootImpl$InputStage" as InputStage
+InputStage -> InputStage
+note right
+deliver
+apply
+forward
+onDeliverToNext
+. . .
+end note
+
+InputStage --> "ViewRootImpl$ViewPostImeInputStage" as ViewPostImeInputStage:onProcess
+ViewPostImeInputStage -> ViewPostImeInputStage:processPointerEvent
+
+ViewPostImeInputStage -> View:dispatchPointerEvent
+
+==进入 View 的分发了==
+
+View -> DecorView: dispatchTouchEvent
+note left
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        final Window.Callback cb = mWindow.getCallback();
+        return cb != null && !mWindow.isDestroyed() && mFeatureId < 0
+                ? cb.dispatchTouchEvent(ev) : super.dispatchTouchEvent(ev);
+    }
+end note
+
+DecorView -> WindowCallbackWrapper : dispatchTouchEvent
+WindowCallbackWrapper -> Activity : dispatchTouchEvent
+Activity -> PhoneWindow : superDispatchTouchEvent
+PhoneWindow -> DecorView : superDispatchTouchEvent
+DecorView -> ViewGroup : dispatchTouchEvent
+ViewGroup -> ViewGroup : dispatchTransformedTouchEvent
+...
+ViewGroup -> View : dispatchTouchEvent
+View -> View :onTouchEvent
+@enduml

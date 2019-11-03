@@ -1,0 +1,39 @@
+@startuml
+--> ViewGroup:dispatchTouchEvent(ACTION_DOWN)
+ViewGroup -> ViewGroup
+note right
+cancelAndClearTouchTargets(ev)
+resetTouchState()
+检查 disallowIntercept
+end note
+
+ViewGroup -> ViewGroup:onInterceptTouchEvent(ev) \n 返回 false
+ViewGroup -> ViewGroup:dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)\n 查找是否有 Child 处理
+
+ViewGroup -> View: handled = child.dispatchTouchEvent(event);
+
+View --> OnTouchListener:onTouch(this, event) \n 可选地临听
+OnTouchListener --> View:false
+
+View -> View : onTouchEvent(event)
+View -> ViewGroup : true
+
+ViewGroup -> ViewGroup : addTouchTarget\nalreadyDispatchedToNewTouchTarget = true;\n在查找过和中已经分发过一次\n 置为 true 后不会重复发送
+
+--> ViewGroup : dispatchTouchEvent(ACTION_UP)
+ViewGroup -> ViewGroup:onInterceptTouchEvent(ev)
+ViewGroup -> ViewGroup:dispatchTransformedTouchEvent \n 直接分发到 target
+ViewGroup -> View : child.dispatchTouchEvent(event);
+View -> View : onTouchEvent()
+
+--> ViewGroup : dispatchTouchEvent 更多事件
+ViewGroup -> ViewGroup : onInterceptTouchEvent \n 后续事件都需要判断拉截
+
+ViewGroup -> View : 如果 onInterceptTouchEvent 返回 true 则分发 cancel 事件
+
+== onInterceptTouchEvent 返回 false==
+--> ViewGroup : dispatchTouchEvent
+ViewGroup -> ViewGroup:onInterceptTouchEvent\n 返回 true
+ViewGroup -> ViewGroup : dispatchTransformedTouchEvent(ev, canceled, null,TouchTarget.ALL_POINTER_IDS);
+ViewGroup -> View:handled = super.dispatchTouchEvent(event);
+@enduml

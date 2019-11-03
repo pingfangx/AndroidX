@@ -20,16 +20,27 @@ Window -> WindowManagerImpl:createLocalWindowManager
 ActivityThread -> Activity:onCreate
 Activity --> Activity:setContentView
 Activity -> PhoneWindow:setContentView
-PhoneWindow -> PhoneWindow:installDecor
-PhoneWindow -> PhoneWindow:generateDecor
-PhoneWindow -> DecorView:new
 
-PhoneWindow -> PhoneWindow:generateLayout()
 note left
-contentParent =
-findViewById(ID_ANDROID_CONTENT);
+这一步也可能通过另一流程创建
+AppCompatDelegateImpl.setContentView
+ensureSubDecor
+createSubDecor
+PhoneWindow.getDecorView()
 end note
 
+
+PhoneWindow -> PhoneWindow:installDecor
+PhoneWindow -> PhoneWindow:mDecor = generateDecor(-1);
+PhoneWindow -> DecorView:new
+
+PhoneWindow -> PhoneWindow:mContentParent = generateLayout(mDecor);
+
+PhoneWindow -> DecorView:layoutResource = R.layout.screen_simple;\n mDecor.onResourcesLoaded(mLayoutInflater, layoutResource);
+DecorView -> DecorView : addView()
+
+PhoneWindow -> DecorView: ViewGroup contentParent = (ViewGroup)findViewById(ID_ANDROID_CONTENT);
+DecorView --> PhoneWindow
 
 
 == View 加载过程==
