@@ -34,7 +34,7 @@ open class BaseTextAdapter<T>(mContext: Context, mData: List<T>) : BaseRecyclerV
  * 文字的 ViewHolder
  */
 open class BaseTextViewHolder<T>(itemView: View) : BaseRecyclerViewHolder<T>(itemView) {
-    private val mTvName: TextView by lazy {
+    val mTvName: TextView by lazy {
         itemView.findViewById<TextView>(R.id.tv_title)
     }
 

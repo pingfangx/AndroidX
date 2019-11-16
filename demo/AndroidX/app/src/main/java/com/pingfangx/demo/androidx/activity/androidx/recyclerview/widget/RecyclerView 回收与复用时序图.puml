@@ -1,0 +1,122 @@
+@startuml
+
+
+
+== layout 绘制流程中的回收 ==
+--> RecyclerView : onMeasure
+RecyclerView -> RecyclerView : dispatchLayoutStep1
+--> RecyclerView : layout
+RecyclerView -> RecyclerView : dispatchLayout
+RecyclerView -> RecyclerView : dispatchLayoutStep1
+RecyclerView -> "LinearLayoutManager" as LayoutManager : mLayout.onLayoutChildren(mRecycler, mState);
+LayoutManager -> LayoutManager : detachAndScrapAttachedViews
+note left
+在 fill 之前临时移除
+end note
+
+LayoutManager -> LayoutManager : scrapOrRecycleView
+note left
+主要区别是 isRemoved
+end note
+alt viewHolder.isInvalid() && !viewHolder.isRemoved() && !mRecyclerView.mAdapter.hasStableIds()
+    LayoutManager -> LayoutManager : removeViewAt(index);
+    LayoutManager -> Recycler : recycler.recycleViewHolderInternal(viewHolder);
+else scrap
+    LayoutManager -> LayoutManager : detachViewAt(index);
+    LayoutManager -> Recycler : recycler.scrapView(view);
+    alt
+        Recycler -[#blue]> Recycler : 回收1) mAttachedScrap.add(holder);
+    else
+        Recycler -> Recycler : mChangedScrap.add(holder);
+    end
+end
+...
+== scroll 滚动过程中的回收 ==
+
+
+--> RecyclerView : onTouchEvent
+RecyclerView -> RecyclerView : scrollByInternal
+RecyclerView -> RecyclerView : scrollStep
+
+RecyclerView -> LayoutManager : mLayout.scrollVerticallyBy(dy, mRecycler, mState);
+participant "LinearLayoutManager$LayoutState" as LayoutState
+
+LayoutManager -> LayoutManager : scrollBy
+LayoutManager -> LayoutManager : fill
+LayoutManager -> LayoutManager : layoutChunk
+LayoutManager -> LayoutManager : recycleByLayoutState
+LayoutManager -> LayoutManager : recycleViewsFromStart
+LayoutManager -> LayoutManager : recycleChildren
+LayoutManager -> LayoutManager : removeAndRecycleViewAt
+LayoutManager -> LayoutManager : removeViewAt
+
+LayoutManager -> Recycler : recycler.recycleView(view);
+Recycler -> Recycler : recycleViewHolderInternal
+alt 移除旧缓存，添加到回收池，再添加新缓存
+    Recycler -> Recycler : recycleCachedViewAt \n addViewHolderToRecycledViewPool \n mCachedViews.remove(cachedViewIndex);
+    Recycler -[#blue]> Recycler : 回收2) mCachedViews.add(targetCacheIndex, holder);
+else 如果没有添加到缓存，则添加到回收池
+    Recycler -> Recycler : addViewHolderToRecycledViewPool
+    Recycler -[#blue]> RecycledViewPool : 回收3) putRecycledView
+    RecycledViewPool -> RecycledViewPool : getScrapDataForType
+    note left
+    根据 type 从 SparseArray 中获取 ScrapData
+    ScrapData 中持有 ArrayList 的 mScrapHeap
+    向 mScrapHeap 中添加 viewHolder
+    end note
+    return ScrapData
+    RecycledViewPool -> RecycledViewPool : ScrapData.mScrapHeap.add
+end
+
+...
+== 复用过程 ==
+LayoutManager -> LayoutManager : layoutChunk
+LayoutManager --> LayoutState : View view = layoutState.next(recycler);
+
+LayoutState ->Recycler : recycler.getViewForPosition(mCurrentPosition);
+Recycler -> Recycler : getViewForPosition(position, false);
+Recycler -> Recycler : tryGetViewHolderForPositionByDeadline
+
+Recycler -> Recycler : 1) getScrapOrHiddenOrCachedHolderForPosition(position, dryRun);
+Recycler -> Recycler : 1.1) for-each in mAttachedScrap
+Recycler -> ChildHelper : 1.2) findHiddenNonRemovedView
+ChildHelper -> ChildHelper : for-each in mHiddenViews
+
+ChildHelper -->  Recycler : view
+Recycler -> ChildHelper : mChildHelper.unhide(view);
+note left
+返回的隐藏，但未移除的 view
+取消隐藏
+移除
+添加到废料中
+end note
+Recycler -> ChildHelper : mChildHelper.detachViewFromParent(layoutIndex);
+Recycler -[#blue]> Recycler : scrapView(view);
+
+Recycler -> Recycler : 1.3) for-each in mCachedViews
+
+Recycler -> "Adapter" as Adapter : final int type = mAdapter.getItemViewType(offsetPosition);
+return type
+
+Recycler -> Recycler : 2) getScrapOrCachedViewForId(id, type, dryRun)
+note left
+mAdapter.hasStableIds() 才会进入
+迭代时比较 holder.getItemId() == id
+和 type == holder.getItemViewType()
+end note
+Recycler -> Recycler : 2.1) for-each in mAttachedScrap
+Recycler -> Recycler : 2.2) for-each in mCachedViews
+
+Recycler -> ViewCacheExtension : 3) getViewForPositionAndType(this, position, type);
+return view
+Recycler -> Recycler : getChildViewHolder(view);
+
+Recycler -> RecycledViewPool : 4) getRecycledView(type);
+return holder or null
+
+Recycler -> RecycledViewPool : willCreateInTime 检查是否时间够
+Recycler -> Adapter : 5) createViewHolder(RecyclerView.this, type);
+return holder
+
+Recycler -> Recycler : tryBindViewHolderByDeadline \n 绑定
+@enduml

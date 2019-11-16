@@ -1,0 +1,16 @@
+@startuml
+--> RecyclerView : onLayout
+RecyclerView -> RecyclerView : dispatchLayout
+RecyclerView -> RecyclerView : dispatchLayoutStep2
+
+RecyclerView -> LinearLayoutManager : mLayout.onLayoutChildren(mRecycler, mState);
+LinearLayoutManager -> LinearLayoutManager : fill
+LinearLayoutManager -> LinearLayoutManager : layoutChunk
+LinearLayoutManager -> "LinearLayoutManager$LayoutState" as LayoutState : View view = layoutState.next(recycler);
+
+LayoutState -> "RecyclerView$Recycler" as Recycler : recycler.getViewForPosition(mCurrentPosition);
+Recycler -> Recycler : getViewForPosition(position, false);
+Recycler -> Recycler : tryGetViewHolderForPositionByDeadline
+Recycler -> "RecyclerView$Adapter" as Adapter : createViewHolder
+Adapter -> Adapter : onCreateViewHolder
+@enduml
