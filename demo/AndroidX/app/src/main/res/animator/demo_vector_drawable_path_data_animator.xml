@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:duration="500"
+        android:propertyName="pathData"
+        android:valueFrom="M0,100 l 25,-50 L100,100 100,100z"
+        android:valueTo="M0,100 l 0,-50 L100,50 100,100z"
+        android:valueType="pathType" />
+    <!--这两条路径对于变形必须是兼容的：它们必须具有相同数量的命令，且每个命令的参数数量相同。-->
+    <!--左上角为0,0 x 向右,y 向下-->
+    <!--M 表示移动,l 表示相对线,L 表示绝对线,z 表示闭合-->
+</set>
