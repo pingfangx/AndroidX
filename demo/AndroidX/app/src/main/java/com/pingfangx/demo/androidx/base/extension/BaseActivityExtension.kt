@@ -20,6 +20,6 @@ fun BaseActivity.addButton(text: CharSequence, listener: View.OnClickListener?) 
     btn.text = text
     btn.setOnClickListener(listener)
 
-    val viewGroup: ViewGroup = this.findViewById(R.id.ll_root)
+    val viewGroup: ViewGroup = this.findViewById(R.id.ll_container)
     viewGroup.addView(btn)
 }

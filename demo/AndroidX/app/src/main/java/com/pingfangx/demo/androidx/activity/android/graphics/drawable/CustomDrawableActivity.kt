@@ -29,7 +29,7 @@ class CustomDrawableActivity : BaseTipsActivity() {
         setBackgroundDrawable(tv, BubbleDrawable())
         val layoutParams = LinearLayout.LayoutParams(500, 500)
         layoutParams.leftMargin = 50
-        ll_root.addView(tv, 0, layoutParams)
+        ll_container.addView(tv, 0, layoutParams)
     }
 }
 

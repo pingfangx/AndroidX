@@ -80,7 +80,7 @@ class FloatWindowDemo : ActivityInitializer {
     override fun initActivity(activity: BaseActivity) {
         mActivity = activity
         super.initActivity(activity)
-        val llRoot = activity.findViewById<LinearLayout>(R.id.ll_root)
+        val llRoot = activity.findViewById<LinearLayout>(R.id.ll_container)
         if (llRoot != null) {
             val btnShow = Button(activity)
             btnShow.text = "show"

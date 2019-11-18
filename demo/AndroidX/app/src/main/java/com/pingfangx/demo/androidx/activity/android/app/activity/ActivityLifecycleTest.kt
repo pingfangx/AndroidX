@@ -71,7 +71,7 @@ abstract class BaseLifecycleActivity : BaseTipsActivity() {
 
     override fun initViews() {
         super.initViews()
-        val linearlayout: LinearLayout = findViewById(R.id.ll_root)
+        val linearlayout: LinearLayout = findViewById(R.id.ll_container)
         addButton<AActvity>(linearlayout)
         addButton<BActvity>(linearlayout)
         addButton(linearlayout, "启动 B FLAG_ACTIVITY_NEW_TASK", View.OnClickListener {
@@ -145,7 +145,7 @@ class FragmentLifecycleActivity : BaseLifecycleActivity() {
         super.onCreate(savedInstanceState)
         val supportFragmentManager = supportFragmentManager
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.ll_root, LifecycleFragment())
+        transaction.add(R.id.ll_container, LifecycleFragment())
         transaction.commit()
     }
 }

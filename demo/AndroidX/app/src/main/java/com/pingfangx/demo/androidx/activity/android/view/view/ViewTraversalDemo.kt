@@ -19,7 +19,7 @@ import com.pingfangx.demo.androidx.base.BaseActivity
 class ViewTraversalDemo : ActivityLifecycle {
     override fun onCreate(activity: BaseActivity, savedInstanceState: Bundle?) {
         super.onCreate(activity, savedInstanceState)
-        val viewGroup: ViewGroup = activity.findViewById(R.id.ll_root)
+        val viewGroup: ViewGroup = activity.findViewById(R.id.ll_container)
         TraversalDemoView(activity).also {
             it.setBackgroundColor(Color.BLUE)
             viewGroup.addView(it)

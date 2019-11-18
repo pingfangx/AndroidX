@@ -23,7 +23,7 @@ import com.pingfangx.demo.androidx.base.BaseActivity
 class BackgroundTintDemo : ActivityInitializer {
     override fun initActivity(activity: BaseActivity) {
         super.initActivity(activity)
-        val linearLayout = activity.findViewById<LinearLayout>(R.id.ll_root)
+        val linearLayout = activity.findViewById<LinearLayout>(R.id.ll_container)
 
         val arrayOfModes = PorterDuff.Mode.values()
         for (mode in arrayOfModes) {

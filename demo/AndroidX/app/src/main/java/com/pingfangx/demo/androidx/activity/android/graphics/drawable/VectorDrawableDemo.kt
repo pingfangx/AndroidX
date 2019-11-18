@@ -17,7 +17,7 @@ class VectorDrawableDemo : ActivityInitializer {
     override fun initActivity(activity: BaseActivity) {
         super.initActivity(activity)
         val context = activity
-        val container = activity.findViewById<ViewGroup>(R.id.ll_root)
+        val container = activity.findViewById<ViewGroup>(R.id.ll_container)
         run {
             val tv = TextView(context)
             tv.setBackgroundResource(R.drawable.demo_vector_drawable)
