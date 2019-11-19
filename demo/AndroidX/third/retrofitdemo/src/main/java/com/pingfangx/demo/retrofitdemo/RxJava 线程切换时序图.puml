@@ -1,0 +1,78 @@
+@startuml
+
+--> Observable : subscribeOn
+Observable -> ObservableSubscribeOn
+participant SubscribeOnObserver
+
+
+--> ObservableSubscribeOn : observeOn
+ObservableSubscribeOn -> ObservableObserveOn
+
+
+--> ObservableObserveOn : subscribe
+
+ObservableObserveOn -> ObserveOnObserver
+return
+
+ObservableObserveOn -> ObservableSubscribeOn : source.subscribe(observer)
+
+
+ObservableSubscribeOn -> SubscribeOnObserver
+return 命名为 parent
+
+create SubscribeTask
+ObservableSubscribeOn -> SubscribeTask : new SubscribeTask(parent)
+
+ObservableSubscribeOn --> Scheduler : scheduler.scheduleDirect(Runnable)
+note left
+subscribeOn 订阅任务于指定线程
+通过 Scheduler 完成线程切换
+end note
+
+Scheduler -> IoScheduler : createWorker()
+IoScheduler -> RxThreadFactory :
+
+IoScheduler -> "AtomicReference<CachedWorkerPool>" as Poll : get()
+Poll -> ThreadWorker : new ThreadWorker(threadFactory)
+ThreadWorker -> NewThreadWorker
+NewThreadWorker -> ScheduledExecutorService : SchedulerPoolFactory.create(threadFactory)
+
+
+ThreadWorker --> IoScheduler
+
+IoScheduler -> EventLoopWorker : new EventLoopWorker(pool.get())
+
+EventLoopWorker --> Scheduler : EventLoopWorker
+
+
+Scheduler -> EventLoopWorker : w.schedule(task, delay, unit);
+EventLoopWorker -> NewThreadWorker : scheduleActual
+
+NewThreadWorker -> ScheduledExecutorService : executor.schedule
+
+==执行任务的线程==
+--> SubscribeOnObserver : observer.onNext(response.body())
+note left
+由于调用了 body() 此时已对不是 response 而是特定的对象
+end note
+
+SubscribeOnObserver -> ObserveOnObserver : downstream.onNext(t)
+note left
+subscribeOn 只订阅任务
+对返回的结果不处理，直接传递
+end note
+
+ObserveOnObserver -> ObserveOnObserver : schedule
+note left
+observeOn 观察于
+进行调度，将结果观察于主线程
+使用 HandlerScheduler 实现
+end note
+
+HandlerScheduler -> HandlerWorker : 实际在 ObservableObserveOn.subscribeActual 中就创建了
+
+ObserveOnObserver -> HandlerWorker : schedule(Runnable run, long delay, TimeUnit unit)
+
+==回到主线程==
+ObserveOnObserver --> ObserveOnObserver : run
+@enduml

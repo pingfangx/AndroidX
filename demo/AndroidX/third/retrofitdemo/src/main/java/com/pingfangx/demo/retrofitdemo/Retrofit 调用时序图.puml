@@ -1,0 +1,93 @@
+@startuml
+--> InvocationHandler : invoke \n 动态代理
+
+InvocationHandler -> Retrofit : loadServiceMethod
+
+Retrofit -> ServiceMethod : parseAnnotations
+ServiceMethod -> HttpServiceMethod : parseAnnotations
+HttpServiceMethod -> HttpServiceMethod : createCallAdapter
+
+HttpServiceMethod -> Retrofit : callAdapter
+Retrofit -> Retrofit : nextCallAdapter
+Retrofit -> DefaultCallAdapterFactory : get()
+
+create "DefaultCallAdapterFactory$1" as DefaultCallAdapterFactory.CallAdapter
+DefaultCallAdapterFactory -> DefaultCallAdapterFactory.CallAdapter : new
+DefaultCallAdapterFactory.CallAdapter --> HttpServiceMethod
+
+HttpServiceMethod -> "HttpServiceMethod$CallAdapted" as CallAdapted : new CallAdapted<>(requestFactory, callFactory, responseConverter, callAdapter)
+CallAdapted --> InvocationHandler
+
+InvocationHandler -> CallAdapted : invoke(Object[] args)
+CallAdapted -> OkHttpCall : new
+note left
+Call<ResponseT> call = new OkHttpCall<>(
+    requestFactory, args, callFactory, responseConverter);
+end note
+return
+
+CallAdapted -> CallAdapted : adapt(call, args)
+
+
+CallAdapted -> DefaultCallAdapterFactory.CallAdapter : callAdapter.adapt(call)
+DefaultCallAdapterFactory.CallAdapter -> ExecutorCallbackCall : new ExecutorCallbackCall<>(executor, call);
+
+====
+--> ExecutorCallbackCall : enqueue
+
+create "ExecutorCallbackCall$1" as ExecutorCallbackCall_Callback
+ExecutorCallbackCall -> ExecutorCallbackCall_Callback
+
+ExecutorCallbackCall -> OkHttpCall : delegate.enqueue
+OkHttpCall -> OkHttpCall : createRawCall()
+
+create OkHttpClient
+OkHttpCall -> OkHttpClient : okhttp3.Call call = callFactory.newCall(requestFactory.create(args));
+
+create "okhttp3.RealCall" as RealCall
+OkHttpClient -> RealCall : RealCall.newRealCall
+
+RealCall --> OkHttpCall : rawCall
+
+create "okhttp3.Callback" as okhttp3_Callback
+OkHttpCall -> okhttp3_Callback : new
+return
+
+OkHttpCall -> RealCall : rawCall.enqueue(Callback responseCallback)
+create "RealCall$AsyncCall" as AsyncCall
+RealCall -> AsyncCall
+create NamedRunnable
+AsyncCall -> NamedRunnable
+
+RealCall -> Dispatcher : client.dispatcher().enqueue( \n new AsyncCall(responseCallback));
+Dispatcher -> Dispatcher : promoteAndExecute
+Dispatcher -> AsyncCall : asyncCall.executeOn(executorService());
+
+AsyncCall -> NamedRunnable : executorService.execute(this);
+
+
+====
+AsyncCall --> NamedRunnable : run
+NamedRunnable -> AsyncCall : execute()
+
+AsyncCall -> AsyncCall : getResponseWithInterceptorChain()
+create RealInterceptorChain
+AsyncCall -> RealInterceptorChain : chain.proceed(originalRequest);
+RealInterceptorChain -> Interceptor : intercept
+Interceptor -> RealInterceptorChain : proceed
+...
+
+RealInterceptorChain -> AsyncCall : okhttp3.response
+AsyncCall -> okhttp3_Callback : responseCallback.onResponse(RealCall.this, response);
+
+okhttp3_Callback -> OkHttpCall : Response<T> parseResponse(okhttp3.Response rawResponse)
+OkHttpCall -> GsonResponseBodyConverter
+return T
+OkHttpCall -> okhttp3_Callback : T
+okhttp3_Callback -> ExecutorCallbackCall_Callback : callback.onResponse(OkHttpCall.this, response);
+
+note left
+    接下来调用 callbackExecutor.execute
+    然后 callback.onResponse(ExecutorCallbackCall.this, response);
+end note
+@enduml

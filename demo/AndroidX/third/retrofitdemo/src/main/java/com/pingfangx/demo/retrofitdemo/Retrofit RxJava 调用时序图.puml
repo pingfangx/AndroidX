@@ -1,0 +1,94 @@
+@startuml
+
+--> "Builder" :  addCallAdapterFactory()
+Builder -> Builder :  build()
+note right
+在构建时，会先添加 add 的 CallAdapterFactory
+      List<CallAdapter.Factory> callAdapterFactories = new ArrayList<>(this.callAdapterFactories);
+      callAdapterFactories.addAll(platform.defaultCallAdapterFactories(callbackExecutor));
+end note
+
+--> InvocationHandler : invoke \n 动态代理
+
+InvocationHandler -> Retrofit : loadServiceMethod
+
+Retrofit -> ServiceMethod : parseAnnotations
+ServiceMethod -> HttpServiceMethod : parseAnnotations
+HttpServiceMethod -> HttpServiceMethod : createCallAdapter
+
+HttpServiceMethod -> Retrofit : callAdapter
+Retrofit -> Retrofit : nextCallAdapter
+
+Retrofit -> RxJava2CallAdapterFactory : get()
+
+create RxJava2CallAdapter
+RxJava2CallAdapterFactory -> RxJava2CallAdapter : new
+RxJava2CallAdapter --> HttpServiceMethod
+
+
+HttpServiceMethod -> "HttpServiceMethod$CallAdapted" as CallAdapted : new CallAdapted<>(requestFactory, callFactory, responseConverter, callAdapter)
+CallAdapted --> InvocationHandler
+
+
+InvocationHandler -> CallAdapted : invoke(Object[] args)
+CallAdapted -> OkHttpCall : new
+note left
+Call<ResponseT> call = new OkHttpCall<>(
+    requestFactory, args, callFactory, responseConverter);
+end note
+return
+
+CallAdapted -> CallAdapted : adapt(call, args)
+
+
+CallAdapted -> RxJava2CallAdapter : callAdapter.adapt(call)
+
+RxJava2CallAdapter -> CallExecuteObservable
+return responseObservable
+RxJava2CallAdapter -> BodyObservable : new BodyObservable<>(responseObservable);
+return
+
+participant BodyObserver
+
+== 省略 subscribeOn 指定的线程切换==
+--> BodyObservable : source.subscribe(parent);
+
+BodyObservable -> CallExecuteObservable : upstream.subscribe(new BodyObserver<T>(observer));
+
+CallExecuteObservable -> OkHttpCall : call.execute()
+
+OkHttpCall -> OkHttpCall : createRawCall()
+
+create OkHttpClient
+OkHttpCall -> OkHttpClient : okhttp3.Call call = callFactory.newCall(requestFactory.create(args));
+
+create "okhttp3.RealCall" as RealCall
+OkHttpClient -> RealCall : RealCall.newRealCall
+
+RealCall --> OkHttpCall : rawCall
+
+OkHttpCall -> RealCall : execute()
+RealCall -> Dispatcher : client.dispatcher().executed(this);
+
+RealCall -> RealCall : getResponseWithInterceptorChain()
+create RealInterceptorChain
+RealCall -> RealInterceptorChain : chain.proceed(originalRequest);
+RealInterceptorChain -> Interceptor : intercept
+Interceptor -> RealInterceptorChain : proceed
+...
+
+RealInterceptorChain -> RealCall : okhttp3.response
+RealCall -> OkHttpCall : okhttp3.response
+
+okhttp3_Callback -> OkHttpCall : Response<T> parseResponse(okhttp3.Response rawResponse)
+OkHttpCall -> GsonResponseBodyConverter
+return T
+
+OkHttpCall -> BodyObserver : observer.onNext(response)
+BodyObserver -> SubscribeOnObserver : observer.onNext(response.body())
+note left
+由于调用了 body() 此时已对不是 response 而是特定的对象
+end note
+
+==省略 observerOn 指定的线程切换==
+@enduml
