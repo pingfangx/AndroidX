@@ -1,0 +1,115 @@
+@startuml
+--> Glide : with()
+
+Glide -> Glide : getRetriever()
+note right
+return Glide.get(context).getRequestManagerRetriever();
+这里调用 Glide.get 会获取 Glide 并进行相关的初始化
+end note
+
+
+Glide -> RequestManagerRetriever : Retriever.get()
+
+RequestManagerRetriever -> RequestManager
+
+--> RequestManager : load()
+RequestManager -> RequestBuilder : asDrawable()
+return
+
+RequestManager -> RequestBuilder : load()
+
+--> RequestBuilder : into(ImageView)
+RequestBuilder -> RequestBuilder : into(...)
+note left
+该重载提供了 callbackExecutor
+Executors.mainThreadExecutor()
+end note
+
+RequestBuilder -> "ViewTarget" as Target : buildImageViewTarget
+return
+
+RequestBuilder -> "SingleRequest" as Request : buildRequest
+return
+note left
+创建
+end note
+
+RequestBuilder -> RequestManager : requestManager.clear(target);
+note right
+这是是否是在加载时，取消 target 上之前的加载
+以后再学习下
+end note
+
+RequestBuilder -> RequestManager : requestManager.track(target, request);
+
+RequestManager -> Request : begin()
+
+alt Util.isValidDimensions(overrideWidth, overrideHeight)
+Request -> Request : onSizeReady
+else
+Request -> Target : getSize(this)
+Target -> Request : onSizeReady
+end
+
+
+Request -> Engine : load(...ResourceCallback,callbackExecutor)
+note right
+此时 load 有很多参数
+其中 ResourceCallback cb 是 this
+callbackExecutor 是创建 Request 时提供
+end note
+
+Request --> Target : onLoadStarted
+note left
+异步加载之后，如果有缓存？
+end note
+
+Engine -> Engine : loadFromMemory
+Engine -> Engine : loadFromActiveResources
+Engine -> Engine : loadFromCache
+
+alt memoryResource !=null
+Engine -> Request : LoadStatus
+else
+Engine -> Engine : waitForExistingOrStartNewJob
+end
+
+Engine -> EngineJob : build
+return
+
+Engine -> DecodeJob : build
+return
+
+
+Engine -> EngineJob : engineJob.addCallback(cb, callbackExecutor)
+Engine -> EngineJob : engineJob.start(decodeJob);
+
+
+
+EngineJob -> DecodeJob : executor.execute(decodeJob);
+
+DecodeJob -> DataFetcherGenerator : getNextGenerator()
+return
+
+DecodeJob -> DecodeJob : runGenerators()
+DecodeJob -> DataFetcherGenerator : startNext()
+
+DecodeJob -> LoadData : helper.getLoadData().get()
+LoadData -> DataFetcher
+DataFetcher -> HttpUrlFetcher
+
+DecodeJob -> HttpUrlFetcher : loadData
+HttpUrlFetcher -> InputStream
+return
+
+HttpUrlFetcher -> DataFetcherGenerator : callback.onDataReady(InputStream)
+DataFetcherGenerator -> DecodeJob : onDataFetcherReady
+DecodeJob -> DecodeJob : decodeFromRetrievedData()
+...
+DecodeJob -> DecodeJob : notifyEncodeAndRelease
+DecodeJob -> EngineJob : onResourceReady
+EngineJob -> EngineJob : notifyCallbacksOfResult
+
+EngineJob -> Request : entry.executor.execute(new CallResourceReady(entry.cb)); \n onResourceReady
+Request -> Target : onResourceReady
+@enduml
